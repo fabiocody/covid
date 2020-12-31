@@ -24,7 +24,6 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.data.subscribe(data => {
-      console.log('data-table: data =', data);
       this.dataSource = new MatTableDataSource<DataModel>(data);
       this.filterDataset();
     });
