@@ -10,6 +10,7 @@ export class TodayCardComponent implements OnInit {
   @Input() data = 0;
   @Input() delta = 0;
   @Input() icon = '';
+  @Input() color = '';
 
   constructor() { }
 
