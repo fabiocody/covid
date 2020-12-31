@@ -1,0 +1,100 @@
+<mat-card-title>Data table</mat-card-title>
+
+<div class="row mt-4">
+  <div class="col-12 col-md-6">
+    <div class="row">
+      <mat-form-field class="col-6">
+        <mat-label>From</mat-label>
+        <input matInput
+               [(ngModel)]="fromDate"
+               [matDatepicker]="fromDatePicker"
+               [max]="toDate"
+               (focus)="fromDatePicker.open()"
+               (dateChange)="filterDataset()"
+               name="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <mat-label>To</mat-label>
+        <input matInput
+               [(ngModel)]="toDate"
+               [matDatepicker]="toDatePicker"
+               [min]="fromDate"
+               (focus)="toDatePicker.open()"
+               (dateChange)="filterDataset()"
+               name="toDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive pb-4">
+  <table mat-table [dataSource]="filteredDataSource">
+    <ng-container matColumnDef="date" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'Date' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.date | amDateFormat:'YYYY-MM-DD'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="total" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'Total' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.totalCases | number}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="active" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'Active' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.activeCases | number}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="recovered" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'Recovered' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.recovered | number}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="deaths" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'Deaths' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.deaths | number}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="hospitalized" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'Hospitalized' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.hospitalized | number}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="icHospitalized" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'IC Hospitalized' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.icHospitalized | number}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="tests" mat-align-tabs="center">
+      <th style="font-weight: bold" mat-header-cell *matHeaderCellDef>
+        {{ 'Tests' | uppercase }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.tests | number}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="COLUMNS; sticky: false"></tr>
+    <tr mat-row *matRowDef="let element; columns: COLUMNS"></tr>
+  </table>
+
+  <mat-card-footer>
+    <mat-paginator [pageSizeOptions]="[15, 30, 60, 90]" showFirstLastButtons></mat-paginator>
+  </mat-card-footer>
+</div>
+

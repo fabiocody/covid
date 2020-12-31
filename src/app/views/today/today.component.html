@@ -1,0 +1,44 @@
+<mat-card-title>Today</mat-card-title>
+
+<div class="row mt-5">
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-3"
+                  title="{{'Total cases' | uppercase}}"
+                  [data]="todayData.totalCases"
+                  [delta]="deltaData.totalCases"
+                  icon="chart-donut"></app-today-card>
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+                  title="{{'Active cases' | uppercase}}"
+                  [data]="todayData.activeCases"
+                  [delta]="deltaData.activeCases"
+                  icon="plus"></app-today-card>
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+                  title="{{'Recovered' | uppercase}}"
+                  [data]="todayData.recovered"
+                  [delta]="deltaData.recovered"
+                  icon="check"></app-today-card>
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+                  title="{{'Deaths' | uppercase}}"
+                  [data]="todayData.deaths"
+                  [delta]="deltaData.deaths"
+                  icon="grave-stone"></app-today-card>
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+                  title="{{'Hospitalized' | uppercase}}"
+                  [data]="todayData.hospitalized"
+                  [delta]="deltaData.hospitalized"
+                  icon="hospital"></app-today-card>
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+                  title="{{'ICU' | uppercase}}"
+                  [data]="todayData.icHospitalized"
+                  [delta]="deltaData.icHospitalized"
+                  icon="doctor"></app-today-card>
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+                  title="{{'Tests' | uppercase}}"
+                  [data]="todayData.tests"
+                  [delta]="deltaData.tests"
+                  icon="test-tube"></app-today-card>
+  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+                  title="{{'Positives' | uppercase}}"
+                  [data]="todayData.totalCases / todayData.tests * 100"
+                  [delta]="deltaData.totalCases / deltaData.tests * 100"
+                  icon="percent"></app-today-card>
+</div>
