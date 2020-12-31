@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-raw-data',
+  selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })

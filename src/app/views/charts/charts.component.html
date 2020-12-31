@@ -1,1 +1,32 @@
 <mat-card-title>Charts</mat-card-title>
+
+<div class="row mt-4">
+  <div class="col-12 col-md-6">
+    <div class="row">
+      <mat-form-field class="col-6">
+        <mat-label>From</mat-label>
+        <input matInput
+               [(ngModel)]="fromDate"
+               [matDatepicker]="fromDatePicker"
+               [max]="toDate"
+               (focus)="fromDatePicker.open()"
+               (dateChange)="filterDataset()"
+               name="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <mat-label>To</mat-label>
+        <input matInput
+               [(ngModel)]="toDate"
+               [matDatepicker]="toDatePicker"
+               [min]="fromDate"
+               (focus)="toDatePicker.open()"
+               (dateChange)="filterDataset()"
+               name="toDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

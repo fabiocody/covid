@@ -19,10 +19,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatNativeDateModule} from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'ngx-moment';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+import {PlotlyViaCDNModule} from 'angular-plotly.js';
+
+PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
 
 @NgModule({
   declarations: [
@@ -50,7 +55,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatNativeDateModule,
     MatTableModule,
     MomentModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    PlotlyViaCDNModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
