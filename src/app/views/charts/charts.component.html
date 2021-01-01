@@ -9,8 +9,9 @@
                [(ngModel)]="fromDate"
                [matDatepicker]="fromDatePicker"
                [max]="toDate"
-               (focus)="fromDatePicker.open()"
+               (click)="fromDatePicker.open()"
                (dateChange)="filterDataset()"
+               [readonly]="true"
                name="fromDate">
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #fromDatePicker></mat-datepicker>
@@ -21,8 +22,9 @@
                [(ngModel)]="toDate"
                [matDatepicker]="toDatePicker"
                [min]="fromDate"
-               (focus)="toDatePicker.open()"
+               (click)="toDatePicker.open()"
                (dateChange)="filterDataset()"
+               [readonly]="true"
                name="toDate">
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #toDatePicker></mat-datepicker>

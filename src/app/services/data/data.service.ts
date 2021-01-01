@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {mergeMap} from 'rxjs/operators';
 import {DataModel} from '../../model/DataModel';
 import {Papa} from 'ngx-papaparse';
 
@@ -21,7 +20,7 @@ export class DataService {
     this.retrieveData();
   }
 
-  public retrieveData(): void {
+  private retrieveData(): void {
     this.papa.parse(DataService.DATA_URL, {
       download: true,
       header: true,

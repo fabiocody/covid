@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {DataModel} from '../../model/DataModel';
 import {DataService} from '../../services/data/data.service';
-import * as moment from 'moment';
 import {Plotly} from 'angular-plotly.js/lib/plotly.interface';
+import * as moment from 'moment';
 
 class GraphData {
   data: Plotly.Data;
@@ -18,8 +18,8 @@ class GraphData {
   styleUrls: ['./charts.component.scss']
 })
 export class ChartsComponent implements OnInit {
-  public fromDate = new Date(Date.now() - 15 * 24 * 60 * 60 * 1000);
-  public toDate = new Date(Date.now());
+  public fromDate = moment().subtract(14, 'days').toDate();
+  public toDate = moment().toDate();
   private data: DataModel[] = [];
   private deltaData: DataModel[] = [];
   private filteredData: DataModel[] = [];
