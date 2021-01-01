@@ -44,12 +44,11 @@ export class ChartsComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.data.subscribe(data => {
       this.data = data;
-      this.createDeltaData();
-      this.filterDataset();
+      this.createDeltaData().then(_ => this.filterDataset());
     });
   }
 
-  createDeltaData(): void {
+  async createDeltaData(): Promise<void> {
     this.deltaData = [];
     const date = this.data.map(d => d.date);
     const totalCases = ChartsComponent.ediff1d(this.data.map(d => d.totalCases));
@@ -73,7 +72,7 @@ export class ChartsComponent implements OnInit {
     }
   }
 
-  filterDataset(): void {
+  async filterDataset(): Promise<void> {
     this.filteredData = this.data
       .filter(d => moment(d.date).isSameOrAfter(this.fromDate, 'day'))
       .filter(d => moment(d.date).isSameOrBefore(this.toDate, 'day'));
@@ -83,7 +82,7 @@ export class ChartsComponent implements OnInit {
     this.plot();
   }
 
-  plot(): void {
+  async plot(): Promise<void> {
     const graphData = new GraphData();
     if (this.filteredData.length > 0) {
       const x = this.filteredData.map(d => d.date);
