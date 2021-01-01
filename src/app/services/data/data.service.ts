@@ -21,10 +21,6 @@ export class DataService {
     this.retrieveData();
   }
 
-  public getDataValue(): DataModel[] {
-    return this.dataSubject.value;
-  }
-
   public retrieveData(): void {
     this.papa.parse(DataService.DATA_URL, {
       download: true,
