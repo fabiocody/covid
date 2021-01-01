@@ -40,12 +40,14 @@
                   [delta]="deltaData.tests"
                   icon="test-tube"></app-today-card>
   <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
-                  title="{{'Positives' | uppercase}}"
+                  title="{{'Positive tests' | uppercase}}"
                   [data]="deltaData.totalCases / deltaData.tests * 100"
                   [sevenDaysDelta]="sevenDaysDelta.totalCases / sevenDaysDelta.tests * 100"
                   icon="percent"></app-today-card>
 </div>
 
-<div class="mt-5" style="text-align: center">
+<mat-divider class="mt-4"></mat-divider>
+
+<div class="mt-4" style="text-align: center">
   <mat-card-subtitle>Last update: {{todayData.date | amCalendar}}</mat-card-subtitle>
 </div>
