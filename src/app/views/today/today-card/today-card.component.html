@@ -6,9 +6,11 @@
   </mat-card-header>
   <mat-card-content>
     <span *ngIf="delta != 0" class="delta" style="float: left">{{delta > 0 ? '+' : ''}}{{delta | number}}</span>
-    <mat-icon svgIcon="{{sevenDaysDelta >= 0 ? 'arrow-top-right-thick' : 'arrow-bottom-right-thick'}}"
+    <mat-icon *ngIf="sevenDaysDelta != null"
+              svgIcon="{{sevenDaysDelta === 0 ? 'arrow-right-thick' : (sevenDaysDelta > 0 ? 'arrow-top-right-thick' : 'arrow-bottom-right-thick')}}"
               color="primary"
-              style="float: right" matTooltip="Last week trend"></mat-icon>
+              style="float: right"
+              matTooltip="Last week trend"></mat-icon>
     <div style="clear: both"></div>
   </mat-card-content>
 </mat-card>
