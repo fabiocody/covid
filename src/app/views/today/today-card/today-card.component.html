@@ -2,6 +2,13 @@
   <mat-card-header class="mt-2">
     <mat-icon mat-card-avatar svgIcon="{{icon}}" color="accent"></mat-icon>
     <mat-card-title>{{title | uppercase}}</mat-card-title>
-    <mat-card-subtitle class="data">{{data | number}} <span class="delta">({{delta > 0 ? '+' : ''}}{{delta | number}})</span></mat-card-subtitle>
+    <mat-card-subtitle class="data">{{data | number}}</mat-card-subtitle>
   </mat-card-header>
+  <mat-card-content>
+    <span *ngIf="delta != 0" class="delta" style="float: left">{{delta > 0 ? '+' : ''}}{{delta | number}}</span>
+    <mat-icon svgIcon="{{sevenDaysDelta >= 0 ? 'arrow-top-right-thick' : 'arrow-bottom-right-thick'}}"
+              color="primary"
+              style="float: right" matTooltip="Last week trend"></mat-icon>
+    <div style="clear: both"></div>
+  </mat-card-content>
 </mat-card>

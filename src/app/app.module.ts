@@ -26,6 +26,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
 
@@ -38,27 +39,28 @@ PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
     DataTableComponent,
     TodayCardComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatToolbarModule,
-    MatIconModule,
-    NgbModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatTableModule,
-    MomentModule,
-    MatPaginatorModule,
-    MatButtonToggleModule,
-    PlotlyViaCDNModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatToolbarModule,
+        MatIconModule,
+        NgbModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTableModule,
+        MomentModule,
+        MatPaginatorModule,
+        MatButtonToggleModule,
+        PlotlyViaCDNModule,
+        MatTooltipModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

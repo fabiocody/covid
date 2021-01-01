@@ -190,6 +190,5 @@ export class ChartsComponent implements OnInit {
       };
     }
     this.graphData = graphData;
-    console.log(this.graphData);
   }
 }
