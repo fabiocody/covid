@@ -12,10 +12,10 @@ import * as moment from 'moment';
 })
 export class DataTableComponent implements OnInit {
   public COLUMNS = ['date', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icHospitalized', 'tests'];
-  public fromDate = moment().subtract(1, 'month').toDate();
-  public toDate = moment().toDate();
   private dataSource = new MatTableDataSource<DataModel>();
   public filteredDataSource = new MatTableDataSource<DataModel>();
+  public toDate = this.dataSource.data.length > 0 ? this.dataSource.data[0].date : moment().toDate();
+  public fromDate = moment(this.toDate).subtract(1, 'month').toDate();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 

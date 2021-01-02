@@ -18,12 +18,12 @@ class GraphData {
   styleUrls: ['./charts.component.scss']
 })
 export class ChartsComponent implements OnInit {
-  public fromDate = moment().subtract(14, 'days').toDate();
-  public toDate = moment().toDate();
   private data: DataModel[] = [];
   private deltaData: DataModel[] = [];
   private filteredData: DataModel[] = [];
   private filteredDeltaData: DataModel[] = [];
+  public toDate = this.data.length > 0 ? this.data[0].date : moment().toDate();
+  public fromDate = moment(this.toDate).subtract(14, 'days').toDate();
   public graphData: GraphData = new GraphData();
 
   constructor(private dataService: DataService) {
