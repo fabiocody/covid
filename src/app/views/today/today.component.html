@@ -1,53 +1,60 @@
 <mat-card-title>Today</mat-card-title>
 
 <div *ngIf="todayData" class="row mt-4">
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-3"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Total cases' | uppercase}}"
                   [data]="todayData.totalCases"
                   [delta]="deltaData.totalCases"
                   icon="chart-donut"></app-today-card>
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Active cases' | uppercase}}"
                   [data]="todayData.activeCases"
                   [delta]="deltaData.activeCases"
                   [sevenDaysDelta]="sevenDaysDelta.activeCases"
                   icon="plus"></app-today-card>
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Recovered' | uppercase}}"
                   [data]="todayData.recovered"
                   [delta]="deltaData.recovered"
                   icon="check"></app-today-card>
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Deaths' | uppercase}}"
                   [data]="todayData.deaths"
                   [delta]="deltaData.deaths"
                   icon="grave-stone"></app-today-card>
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Hospitalized' | uppercase}}"
                   [data]="todayData.hospitalized"
                   [delta]="deltaData.hospitalized"
                   [sevenDaysDelta]="sevenDaysDelta.hospitalized"
                   icon="hospital"></app-today-card>
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'ICU' | uppercase}}"
                   [data]="todayData.icHospitalized"
                   [delta]="deltaData.icHospitalized"
                   [sevenDaysDelta]="sevenDaysDelta.icHospitalized"
                   icon="doctor"></app-today-card>
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Tests' | uppercase}}"
                   [data]="todayData.tests"
                   [delta]="deltaData.tests"
                   icon="test-tube"></app-today-card>
-  <app-today-card class="col col-12 col-md-6 col-lg-4 col-xl-3 mb-2"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Positive tests' | uppercase}}"
                   [data]="deltaData.totalCases / deltaData.tests * 100"
                   [sevenDaysDelta]="sevenDaysDelta.totalCases / sevenDaysDelta.tests * 100"
                   icon="percent"></app-today-card>
 </div>
 
-<mat-divider class="mt-4"></mat-divider>
+<mat-divider class="mt-3"></mat-divider>
 
 <div class="mt-4" style="text-align: center">
   <mat-card-subtitle>Last update: {{todayData.date | amCalendar}}</mat-card-subtitle>
+  <mat-card-subtitle>
+    Source:
+    <a href="https://github.com/pcm-dpc/COVID-19" target="_blank">
+      <mat-icon svgIcon="github"></mat-icon>
+      pcm-dpc/COVID-19
+    </a>
+  </mat-card-subtitle>
 </div>
