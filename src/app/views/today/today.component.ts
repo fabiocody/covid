@@ -21,7 +21,6 @@ export class TodayComponent implements OnInit {
       this.todayData = data[0];
       const yesterdayData = data[1];
       const lastWeekData = data[7];
-      console.log(data[7]);
       // tslint:disable-next-line:forin
       for (const key in this.todayData) {
         // @ts-ignore

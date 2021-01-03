@@ -1,4 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {DataService} from '../../services/data/data.service';
+
+
+export interface NavbarItem {
+  label: string;
+  icon: string;
+  routerLink: string;
+}
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,10 +16,32 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
   @Input() public title = '';
-  public REGIONS = ['Italy'];
+  public REGIONS = ['Italy', 'Lombardy'];
   public selectedRegion = '';
+  public navbarItems: NavbarItem[] = [
+    {
+      label: 'Today',
+      icon: 'today',
+      routerLink: 'today',
+    },
+    {
+      label: 'Charts',
+      icon: 'timeline',
+      routerLink: 'charts',
+    },
+    {
+      label: 'Data',
+      icon: 'table_rows',
+      routerLink: 'data-table',
+    },
+    {
+      label: '',
+      icon: 'place',
+      routerLink: '',
+    },
+  ];
 
-  constructor() {
+  constructor(private dataService: DataService) {
     const localRegion = localStorage.getItem('region');
     if (localRegion == null) {
       this.selectedRegion = this.REGIONS[0];
@@ -26,6 +57,6 @@ export class NavbarComponent implements OnInit {
   public onSelectMenuItem(item: string): void {
     this.selectedRegion = item;
     localStorage.setItem('region', item);
-    console.log(item);
+    this.dataService.retrieveData();
   }
 }

@@ -24,6 +24,8 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.data.subscribe(data => {
+      this.toDate = data.length > 0 ? data[0].date : moment().toDate();
+      this.fromDate = moment(this.toDate).subtract(1, 'month').toDate();
       this.dataSource = new MatTableDataSource<DataModel>(data);
       this.filterDataset();
     });

@@ -1,8 +1,50 @@
-<mat-toolbar color="primary" class="mat-elevation-z6 app-toolbar">
+<mat-toolbar color="primary" class="mat-elevation-z6 app-toolbar" fxLayout="row">
   <mat-icon>coronavirus</mat-icon>
   <span class="ml-1">{{title | uppercase}}</span>
+  <span class="ml-1" fxHide fxShow.xs>| {{selectedRegion}}</span>
   <span class="spacer"></span>
-  <button mat-button routerLink="today">Today</button>
+  <ng-container *ngFor="let item of navbarItems">
+    <ng-container *ngIf="item.icon !== 'place'">
+      <button mat-button routerLink="{{item.routerLink}}" fxShow fxHide.xs>
+        <mat-icon>{{item.icon}}</mat-icon>
+        {{item.label}}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="item.icon === 'place'">
+      <button mat-button [matMenuTriggerFor]="regionMenu" fxShow fxHide.xs>
+        <mat-icon>{{item.icon}}</mat-icon>
+        {{selectedRegion}}
+        <mat-icon style="margin-right: -10px">arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #regionMenu>
+        <button *ngFor="let item of REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+        </mat-menu>
+    </ng-container>
+  </ng-container>
+  <button mat-icon-button [matMenuTriggerFor]="responsiveMenu" fxHide fxShow.xs>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #responsiveMenu>
+    <ng-container *ngFor="let item of navbarItems">
+      <ng-container *ngIf="item.icon !== 'place'">
+        <button mat-menu-item routerLink="{{item.routerLink}}">
+          <mat-icon>{{item.icon}}</mat-icon>
+          {{item.label}}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item.icon === 'place'">
+        <mat-divider></mat-divider>
+        <button mat-menu-item [matMenuTriggerFor]="regionMenu">
+          <mat-icon>{{item.icon}}</mat-icon>
+          {{selectedRegion}}
+        </button>
+        <mat-menu #regionMenu>
+          <button *ngFor="let item of REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+        </mat-menu>
+      </ng-container>
+    </ng-container>
+  </mat-menu>
+  <!--button mat-button routerLink="today">Today</button>
   <button mat-button routerLink="charts">Charts</button>
   <button mat-button routerLink="data-table">Data</button>
   <button mat-button *ngIf="REGIONS.length > 1" [matMenuTriggerFor]="menu">
@@ -12,5 +54,5 @@
   </button>
   <mat-menu #menu>
     <button *ngFor="let item of REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
-  </mat-menu>
+  </mat-menu-->
 </mat-toolbar>

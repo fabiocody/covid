@@ -49,7 +49,7 @@
 <mat-divider class="mt-3"></mat-divider>
 
 <div class="mt-4" style="text-align: center">
-  <mat-card-subtitle>Last update: {{todayData.date | amCalendar}}</mat-card-subtitle>
+  <mat-card-subtitle *ngIf="todayData != undefined">Last update: {{todayData.date | amCalendar}}</mat-card-subtitle>
   <mat-card-subtitle>
     Source:
     <a href="https://github.com/pcm-dpc/COVID-19" target="_blank">

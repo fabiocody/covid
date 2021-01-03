@@ -27,6 +27,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDividerModule} from '@angular/material/divider';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
 PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
@@ -38,7 +39,7 @@ PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
     TodayComponent,
     ChartsComponent,
     DataTableComponent,
-    TodayCardComponent
+    TodayCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +65,7 @@ PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
     MatDividerModule,
     _MatMenuDirectivesModule,
     MatMenuModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

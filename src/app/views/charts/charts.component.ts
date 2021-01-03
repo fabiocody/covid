@@ -22,7 +22,7 @@ export class ChartsComponent implements OnInit {
   private deltaData: DataModel[] = [];
   private filteredData: DataModel[] = [];
   private filteredDeltaData: DataModel[] = [];
-  public toDate = this.data.length > 0 ? this.data[0].date : moment().toDate();
+  public toDate = moment().toDate();
   public fromDate = moment(this.toDate).subtract(14, 'days').toDate();
   public graphData: GraphData = new GraphData();
 
@@ -45,6 +45,8 @@ export class ChartsComponent implements OnInit {
     this.dataService.data.subscribe(data => {
       this.data = data;
       this.createDeltaData().then(_ => this.filterDataset());
+      this.toDate = this.data.length > 0 ? this.data[0].date : moment().toDate();
+      this.fromDate = moment(this.toDate).subtract(14, 'days').toDate();
     });
   }
 
