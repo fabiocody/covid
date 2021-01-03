@@ -183,11 +183,11 @@ export class ChartsComponent implements OnInit {
       graphData.positivePercentage = {
         data: [{
           x,
-          y: this.filteredDeltaData.map(d => d.totalCases / d.tests),
+          y: this.filteredDeltaData.map(d => d.totalCases / d.tests * 100),
           showLegend: false,
           line: { shape: 'spline' },
         }],
-        layout: { title: 'Positive percentage' }
+        layout: { title: 'Positive percentage', yaxis: { title: '%' } }
       };
     }
     this.graphData = graphData;

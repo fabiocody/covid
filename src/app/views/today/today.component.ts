@@ -13,6 +13,7 @@ export class TodayComponent implements OnInit {
   public deltaData = new DataModel();
   public yesterdayDeltaData = new DataModel();
   public sevenDaysDelta = new DataModel();
+  public lastWeekDelta = new DataModel();
 
   constructor(private dataService: DataService) {
   }
@@ -21,16 +22,16 @@ export class TodayComponent implements OnInit {
     this.dataService.data.subscribe(data => {
       this.todayData = data[0];
       const yesterdayData = data[1];
-      const twoDaysAgoData = data[2];
-      const lastWeekData = data[7];
       // tslint:disable-next-line:forin
       for (const key in this.todayData) {
         // @ts-ignore
         this.deltaData[key] = this.todayData[key] - yesterdayData[key];
         // @ts-ignore
-        this.sevenDaysDelta[key] = this.todayData[key] - lastWeekData[key];
+        this.sevenDaysDelta[key] = this.todayData[key] - data[7][key];
         // @ts-ignore
-        this.yesterdayDeltaData[key] = yesterdayData[key] - twoDaysAgoData[key];
+        this.lastWeekDelta[key] = data[7][key] - data[8][key];
+        // @ts-ignore
+        this.yesterdayDeltaData[key] = yesterdayData[key] - data[2][key];
       }
     });
   }
