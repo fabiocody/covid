@@ -42,6 +42,7 @@
   <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
                   title="{{'Positive tests' | uppercase}}"
                   [data]="deltaData.totalCases / deltaData.tests * 100"
+                  [delta]="(deltaData.totalCases / deltaData.tests * 100) - (yesterdayDeltaData.totalCases / yesterdayDeltaData.tests * 100)"
                   [sevenDaysDelta]="sevenDaysDelta.totalCases / sevenDaysDelta.tests * 100"
                   icon="percent"></app-today-card>
 </div>
