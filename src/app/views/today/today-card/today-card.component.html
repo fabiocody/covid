@@ -1,7 +1,7 @@
 <mat-card class="mat-elevation-z3">
   <mat-card-header class="mt-2">
     <mat-icon mat-card-avatar svgIcon="{{icon}}" color="accent"></mat-icon>
-    <mat-card-title>{{title | uppercase}}</mat-card-title>
+    <mat-card-title matTooltip="{{titleTooltip}}">{{title | uppercase}}</mat-card-title>
     <mat-card-subtitle class="data">{{data | number}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
@@ -10,7 +10,7 @@
               svgIcon="{{sevenDaysDelta === 0 ? 'trending-neutral' : (sevenDaysDelta > 0 ? 'trending-up' : 'trending-down')}}"
               color="{{trendIconColor}}"
               style="float: right"
-              matTooltip="Last week trend: {{sevenDaysDelta > 0 ? '+' : ''}}{{sevenDaysDelta | number}}"></mat-icon>
+              matTooltip="Ultima settimana: {{sevenDaysDelta > 0 ? '+' : ''}}{{sevenDaysDelta | number}}"></mat-icon>
     <mat-icon *ngIf="sevenDaysDelta == null" style="float: right"></mat-icon>
     <div style="clear: both"></div>
   </mat-card-content>

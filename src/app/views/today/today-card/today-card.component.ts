@@ -10,8 +10,9 @@ export class TodayCardComponent implements OnInit {
   @Input() data = 0;
   @Input() delta = 0;
   @Input() icon = '';
-  @Input() sevenDaysDelta: number | null = null;
+  @Input() sevenDaysDelta = 0;
   @Input() trendIconColor = 'accent';
+  @Input() titleTooltip = '';
 
   constructor() { }
 

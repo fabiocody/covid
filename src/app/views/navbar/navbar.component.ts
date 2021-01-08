@@ -16,22 +16,22 @@ export interface NavbarItem {
 })
 export class NavbarComponent implements OnInit {
   @Input() public title = '';
-  public REGIONS = ['Italy', 'Lombardia', 'Veneto', 'Campania', 'Lazio'];
+  public REGIONS = ['Italia', 'Lombardia', 'Veneto', 'Campania', 'Lazio'];
   public selectedRegion = '';
   public navbarItems: NavbarItem[] = [
     {
-      label: 'Today',
+      label: 'Oggi',
       icon: 'today',
       routerLink: 'today',
     },
     {
-      label: 'Charts',
-      icon: 'timeline',
+      label: 'Grafici',
+      icon: 'insert_chart',
       routerLink: 'charts',
     },
     {
-      label: 'Data',
-      icon: 'table_rows',
+      label: 'Dati',
+      icon: 'text_snippet',
       routerLink: 'data-table',
     },
     {

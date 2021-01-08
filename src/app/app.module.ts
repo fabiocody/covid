@@ -1,5 +1,6 @@
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import '@angular/common/locales/global/it';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -22,15 +23,18 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'ngx-moment';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDividerModule} from '@angular/material/divider';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
 import {FlexLayoutModule} from '@angular/flex-layout';
-
+import {AppMatPaginatorIntl} from './i18n/AppMatPaginatorIntl';
+import * as moment from 'moment';
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
-PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
+
+PlotlyViaCDNModule.setPlotlyVersion('1.58.4');
+PlotlyViaCDNModule.setPlotlyBundle('basic');
 
 @NgModule({
   declarations: [
@@ -67,11 +71,15 @@ PlotlyViaCDNModule.setPlotlyVersion('1.55.2');
     MatMenuModule,
     FlexLayoutModule,
   ],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'it'},
+    {provide: MatPaginatorIntl, useClass: AppMatPaginatorIntl}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+    moment.locale('it');
     matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
   }
 }

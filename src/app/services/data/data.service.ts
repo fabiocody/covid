@@ -24,7 +24,7 @@ export class DataService {
   public retrieveData(): void {
     const region = localStorage.getItem('region');
     let url: string;
-    if (region === 'Italy') {
+    if (region === 'Italia') {
       url = DataService.ITALY_DATA_URL;
     } else {
       url = DataService.REGIONS_DATA_URL;

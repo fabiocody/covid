@@ -1,66 +1,68 @@
-<mat-card-title>Today</mat-card-title>
+<mat-card-title>Oggi</mat-card-title>
 
 <div *ngIf="todayData" class="row mt-4">
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'Total cases' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'Casi totali' | uppercase}}"
                   [data]="todayData.totalCases"
                   [delta]="deltaData.totalCases"
                   [sevenDaysDelta]="sevenDaysDelta.totalCases"
                   icon="chart-donut"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'Active cases' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'Casi attivi' | uppercase}}"
                   [data]="todayData.activeCases"
                   [delta]="deltaData.activeCases"
                   [sevenDaysDelta]="sevenDaysDelta.activeCases"
                   [trendIconColor]="sevenDaysDelta.activeCases < 0 ? 'primary' : 'accent'"
                   icon="plus"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'Recovered' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'Guariti' | uppercase}}"
                   [data]="todayData.recovered"
                   [delta]="deltaData.recovered"
                   [sevenDaysDelta]="sevenDaysDelta.recovered"
                   icon="check"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'Deaths' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'Morti' | uppercase}}"
                   [data]="todayData.deaths"
                   [delta]="deltaData.deaths"
                   [sevenDaysDelta]="sevenDaysDelta.deaths"
                   icon="grave-stone"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'Hospitalized' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'Ricoverati' | uppercase}}"
                   [data]="todayData.hospitalized"
                   [delta]="deltaData.hospitalized"
                   [sevenDaysDelta]="sevenDaysDelta.hospitalized"
                   [trendIconColor]="sevenDaysDelta.hospitalized < 0 ? 'primary' : 'accent'"
                   icon="hospital"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'ICU' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'TI' | uppercase}}"
                   [data]="todayData.icHospitalized"
                   [delta]="deltaData.icHospitalized"
                   [sevenDaysDelta]="sevenDaysDelta.icHospitalized"
                   [trendIconColor]="sevenDaysDelta.icHospitalized < 0 ? 'primary' : 'accent'"
+                  titleTooltip="Terapie intensive"
                   icon="doctor"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'Tests' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'Tamponi' | uppercase}}"
                   [data]="todayData.tests"
                   [delta]="deltaData.tests"
                   [sevenDaysDelta]="sevenDaysDelta.tests"
                   icon="test-tube"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-3"
-                  title="{{'Positive tests' | uppercase}}"
+  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+                  title="{{'P/T' | uppercase}}"
                   [data]="deltaData.totalCases / deltaData.tests * 100"
                   [delta]="((deltaData.totalCases / deltaData.tests) - (yesterdayDeltaData.totalCases / yesterdayDeltaData.tests)) * 100"
                   [sevenDaysDelta]="((deltaData.totalCases / deltaData.tests) - (lastWeekDelta.totalCases / lastWeekDelta.tests)) * 100"
                   [trendIconColor]="(deltaData.totalCases / deltaData.tests) - (lastWeekDelta.totalCases / lastWeekDelta.tests) < 0 ? 'primary' : 'accent'"
+                  titleTooltip="Rapporto positivi/tamponi"
                   icon="percent"></app-today-card>
 </div>
 
 <mat-divider class="mt-3"></mat-divider>
 
 <div class="mt-4" style="text-align: center">
-  <mat-card-subtitle *ngIf="todayData != undefined">Last update: {{todayData.date | amCalendar}}</mat-card-subtitle>
+  <mat-card-subtitle *ngIf="todayData != undefined">Ultimo aggiornamento: {{todayData.date | amCalendar | lowercase}}</mat-card-subtitle>
   <mat-card-subtitle>
-    Source:
+    Fonte dei dati:
     <a href="https://github.com/pcm-dpc/COVID-19" target="_blank">
       <mat-icon svgIcon="github"></mat-icon>
       pcm-dpc/COVID-19

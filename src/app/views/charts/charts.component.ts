@@ -25,6 +25,7 @@ export class ChartsComponent implements OnInit {
   public toDate = moment().toDate();
   public fromDate = moment(this.toDate).subtract(14, 'days').toDate();
   public graphData: GraphData = new GraphData();
+  public config = { locale: 'it-IT' };
 
   constructor(private dataService: DataService) {
   }
@@ -44,9 +45,9 @@ export class ChartsComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.data.subscribe(data => {
       this.data = data;
-      this.createDeltaData().then(_ => this.filterDataset());
       this.toDate = this.data.length > 0 ? this.data[0].date : moment().toDate();
       this.fromDate = moment(this.toDate).subtract(14, 'days').toDate();
+      this.createDeltaData().then(_ => this.filterDataset());
     });
   }
 
@@ -93,92 +94,92 @@ export class ChartsComponent implements OnInit {
           {
             x,
             y: this.filteredData.map(d => d.totalCases),
-            name: 'Total cases',
+            name: 'Casi totali',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredData.map(d => d.activeCases),
-            name: 'Active cases',
+            name: 'Casi attivi',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredData.map(d => d.recovered),
-            name: 'Recovered',
+            name: 'Guariti',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredData.map(d => d.deaths),
-            name: 'Deaths',
+            name: 'Morti',
             line: { shape: 'spline' },
           },
         ],
-        layout: { title: 'Data', }
+        layout: { title: 'Dati', }
       };
       graphData.delta = {
         data: [
           {
             x,
             y: this.filteredDeltaData.map(d => d.totalCases),
-            name: 'Total cases',
+            name: 'Casi totali',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredDeltaData.map(d => d.activeCases),
-            name: 'Active cases',
+            name: 'Casi attivi',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredDeltaData.map(d => d.recovered),
-            name: 'Recovered',
+            name: 'Guariti',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredDeltaData.map(d => d.deaths),
-            name: 'Deaths',
+            name: 'Morti',
             line: { shape: 'spline' },
           },
         ],
-        layout: { title: 'Variations' }
+        layout: { title: 'Varizazioni' }
       };
       graphData.hospitalized = {
         data: [
           {
             x,
             y: this.filteredData.map(d => d.hospitalized),
-            name: 'Hospitalized',
+            name: 'Ricoverati',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredData.map(d => d.icHospitalized),
-            name: 'ICU',
+            name: 'TI',
             line: { shape: 'spline' },
           },
         ],
-        layout: { title: 'Hospitalized' }
+        layout: { title: 'Ospedalizzati' }
       };
       graphData.deltaHospitalized = {
         data: [
           {
             x,
             y: this.filteredDeltaData.map(d => d.hospitalized),
-            name: 'Hospitalized',
+            name: 'Ricoverati',
             line: { shape: 'spline' },
           },
           {
             x,
             y: this.filteredDeltaData.map(d => d.icHospitalized),
-            name: 'ICU',
+            name: 'TI',
             line: { shape: 'spline' },
           }
         ],
-        layout: { title: 'Hospitalized Variations' }
+        layout: { title: 'Variazioni ospedalizzati' }
       };
       graphData.positivePercentage = {
         data: [{
@@ -187,7 +188,7 @@ export class ChartsComponent implements OnInit {
           showLegend: false,
           line: { shape: 'spline' },
         }],
-        layout: { title: 'Positive percentage', yaxis: { title: '%' } }
+        layout: { title: 'Percentuale di positivi', yaxis: { title: '%' } }
       };
     }
     this.graphData = graphData;
