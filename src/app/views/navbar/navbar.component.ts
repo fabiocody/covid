@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DataService} from '../../services/data/data.service';
+import {RegionsService} from '../../services/regions/regions.service';
 
 
 export interface NavbarItem {
@@ -16,8 +16,7 @@ export interface NavbarItem {
 })
 export class NavbarComponent implements OnInit {
   @Input() public title = '';
-  public REGIONS = ['Italia', 'Lombardia', 'Veneto', 'Campania', 'Lazio'];
-  public selectedRegion = '';
+
   public navbarItems: NavbarItem[] = [
     {
       label: 'Oggi',
@@ -41,22 +40,13 @@ export class NavbarComponent implements OnInit {
     },
   ];
 
-  constructor(private dataService: DataService) {
-    const localRegion = localStorage.getItem('region');
-    if (localRegion == null) {
-      this.selectedRegion = this.REGIONS[0];
-      localStorage.setItem('region', this.selectedRegion);
-    } else {
-      this.selectedRegion = localRegion;
-    }
+  constructor(public regionsService: RegionsService) {
   }
 
   ngOnInit(): void {
   }
 
   public onSelectMenuItem(item: string): void {
-    this.selectedRegion = item;
-    localStorage.setItem('region', item);
-    this.dataService.retrieveData();
+    this.regionsService.setRegion(item);
   }
 }

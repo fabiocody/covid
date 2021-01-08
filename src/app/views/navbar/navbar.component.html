@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z6 app-toolbar" fxLayout="row">
   <mat-icon>coronavirus</mat-icon>
   <span class="ml-1">{{title | uppercase}}</span>
-  <span class="ml-1" fxHide fxShow.xs>| {{selectedRegion}}</span>
+  <span class="ml-1" fxHide fxShow.xs>| {{regionsService.getRegion()}}</span>
   <span class="spacer"></span>
   <ng-container *ngFor="let item of navbarItems">
     <ng-container *ngIf="item.icon !== 'place'">
@@ -13,11 +13,11 @@
     <ng-container *ngIf="item.icon === 'place'">
       <button mat-button [matMenuTriggerFor]="regionMenu" fxShow fxHide.xs>
         <mat-icon>{{item.icon}}</mat-icon>
-        {{selectedRegion}}
+        {{regionsService.getRegion()}}
         <mat-icon style="margin-right: -10px">arrow_drop_down</mat-icon>
       </button>
       <mat-menu #regionMenu>
-        <button *ngFor="let item of REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+        <button *ngFor="let item of regionsService.REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
         </mat-menu>
     </ng-container>
   </ng-container>
@@ -36,10 +36,10 @@
         <mat-divider></mat-divider>
         <button mat-menu-item [matMenuTriggerFor]="regionMenu">
           <mat-icon>{{item.icon}}</mat-icon>
-          {{selectedRegion}}
+          {{regionsService.getRegion()}}
         </button>
         <mat-menu #regionMenu>
-          <button *ngFor="let item of REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+          <button *ngFor="let item of regionsService.REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
         </mat-menu>
       </ng-container>
     </ng-container>
