@@ -10,7 +10,7 @@ import {Papa} from 'ngx-papaparse';
 })
 export class DataService {
   private static ITALY_DATA_URL = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv';
-  private static LOMBARDY_DATA_URL = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni.csv';
+  private static REGIONS_DATA_URL = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni.csv';
 
   private dataSubject: BehaviorSubject<DataModel[]>;
   public data: Observable<DataModel[]>;
@@ -26,10 +26,8 @@ export class DataService {
     let url: string;
     if (region === 'Italy') {
       url = DataService.ITALY_DATA_URL;
-    } else if (region === 'Lombardy') {
-      url = DataService.LOMBARDY_DATA_URL;
     } else {
-      return;
+      url = DataService.REGIONS_DATA_URL;
     }
     this.papa.parse(url, {
       download: true,
@@ -38,7 +36,7 @@ export class DataService {
       complete: results => {
         this.dataSubject.next(
           (results.data as any[])
-            .filter(d => d.hasOwnProperty('denominazione_regione') ? d.denominazione_regione === 'Lombardia' : true)
+            .filter(d => d.hasOwnProperty('denominazione_regione') ? d.denominazione_regione === region : true)
             .map(d => DataModel.fromObject(d))
             .filter(d => d !== null)
             .map(d => d as DataModel)

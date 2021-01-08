@@ -16,7 +16,7 @@ export interface NavbarItem {
 })
 export class NavbarComponent implements OnInit {
   @Input() public title = '';
-  public REGIONS = ['Italy', 'Lombardy'];
+  public REGIONS = ['Italy', 'Lombardia', 'Veneto', 'Campania', 'Lazio'];
   public selectedRegion = '';
   public navbarItems: NavbarItem[] = [
     {
