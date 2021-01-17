@@ -1,14 +1,16 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {TodayComponent} from './views/today/today.component';
-import {ChartsComponent} from './views/charts/charts.component';
-import {DataTableComponent} from './views/data-table/data-table.component';
+import {TodayComponent} from './pages/today/today.component';
+import {ChartsComponent} from './pages/charts/charts.component';
+import {DataTableComponent} from './pages/data-table/data-table.component';
+import {RegionDataComponent} from './pages/region-data/region-data.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'today', pathMatch: 'full'},
   {path: 'today', component: TodayComponent},
   {path: 'charts', component: ChartsComponent},
-  {path: 'data-table', component: DataTableComponent}
+  {path: 'data-table', component: DataTableComponent},
+  {path: 'region-data', component: RegionDataComponent}
 ];
 
 @NgModule({

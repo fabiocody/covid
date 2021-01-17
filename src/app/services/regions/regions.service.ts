@@ -6,17 +6,10 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class RegionsService {
   public REGIONS = ['Italia', 'Lombardia', 'Veneto', 'Campania', 'Lazio'];
-  private selectedRegionSubject = new BehaviorSubject<string>('');
+  private selectedRegionSubject = new BehaviorSubject<string>(this.REGIONS[0]);
   public selectedRegion = this.selectedRegionSubject.asObservable();
 
   constructor() {
-    let region = localStorage.getItem('region');
-    console.log('SAVED REGION', region);
-    if (region == null || this.REGIONS.find(r => r === region) == null) {
-      region = this.REGIONS[0];
-      localStorage.setItem('region', region);
-    }
-    this.selectedRegionSubject.next(region);
   }
 
   getRegion(): string {
@@ -24,7 +17,6 @@ export class RegionsService {
   }
 
   setRegion(region: string): void {
-    console.log('setRegion', region);
     this.selectedRegionSubject.next(region);
   }
 }

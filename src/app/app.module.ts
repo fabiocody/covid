@@ -5,15 +5,15 @@ import '@angular/common/locales/global/it';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NavbarComponent} from './views/navbar/navbar.component';
+import {NavbarComponent} from './elements/navbar/navbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatButtonModule} from '@angular/material/button';
-import {TodayComponent} from './views/today/today.component';
-import {ChartsComponent} from './views/charts/charts.component';
-import {DataTableComponent} from './views/data-table/data-table.component';
-import {TodayCardComponent} from './views/today/today-card/today-card.component';
+import {TodayComponent} from './pages/today/today.component';
+import {ChartsComponent} from './pages/charts/charts.component';
+import {DataTableComponent} from './pages/data-table/data-table.component';
+import {TodayCardComponent} from './pages/today/today-card/today-card.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -32,6 +32,10 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {AppMatPaginatorIntl} from './i18n/AppMatPaginatorIntl';
 import * as moment from 'moment';
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
+import { RegionDataComponent } from './pages/region-data/region-data.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { SpinnerComponent } from './elements/spinner/spinner.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 PlotlyViaCDNModule.setPlotlyVersion('1.58.4');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
@@ -44,6 +48,8 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
     ChartsComponent,
     DataTableComponent,
     TodayCardComponent,
+    RegionDataComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +76,8 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
     _MatMenuDirectivesModule,
     MatMenuModule,
     FlexLayoutModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'it'},

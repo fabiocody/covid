@@ -2,6 +2,7 @@ import * as moment from 'moment';
 
 export class DataModel {
   date!: Date;
+  region!: string;
   totalCases!: number;
   activeCases!: number;
   recovered!: number;
@@ -14,6 +15,7 @@ export class DataModel {
     if (object != null && object.data !== '') {
       const data = new DataModel();
       data.date = moment(object.data).toDate();
+      data.region = object.hasOwnProperty('denominazione_regione') ? object.denominazione_regione : 'Italia';
       data.totalCases = parseFloat(object.totale_casi);
       data.activeCases = parseFloat(object.totale_positivi);
       data.recovered = parseFloat(object.dimessi_guariti);

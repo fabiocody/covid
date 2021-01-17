@@ -11,7 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-  public COLUMNS = ['date', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icHospitalized', 'tests'];
+  public COLUMNS = ['date', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests'];
   private dataSource = new MatTableDataSource<DataModel>();
   public filteredDataSource = new MatTableDataSource<DataModel>();
   public toDate = this.dataSource.data.length > 0 ? this.dataSource.data[0].date : moment().toDate();

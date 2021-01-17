@@ -34,6 +34,11 @@ export class NavbarComponent implements OnInit {
       routerLink: 'data-table',
     },
     {
+      label: 'Dati regioni',
+      icon: 'map',
+      routerLink: 'region-data'
+    },
+    {
       label: '',
       icon: 'place',
       routerLink: '',

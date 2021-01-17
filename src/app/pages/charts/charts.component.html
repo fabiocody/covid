@@ -1,0 +1,52 @@
+<mat-card-title>Grafici</mat-card-title>
+
+<div class="row mt-4">
+  <div class="col-12 col-md-6">
+    <div class="row">
+      <mat-form-field class="col-6">
+        <mat-label>Da</mat-label>
+        <input matInput
+               [(ngModel)]="fromDate"
+               [matDatepicker]="fromDatePicker"
+               [max]="toDate"
+               (click)="fromDatePicker.open()"
+               (dateChange)="filterDataset()"
+               [readonly]="true"
+               name="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <mat-label>A</mat-label>
+        <input matInput
+               [(ngModel)]="toDate"
+               [matDatepicker]="toDatePicker"
+               [min]="fromDate"
+               (click)="toDatePicker.open()"
+               (dateChange)="filterDataset()"
+               [readonly]="true"
+               name="toDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<mat-accordion multi>
+  <mat-expansion-panel [expanded]="true">
+    <plotly-plot *ngIf="graphData.data" [data]="graphData.data.data" [layout]="graphData.data.layout" [config]="config" [useResizeHandler]="true"></plotly-plot>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true">
+    <plotly-plot *ngIf="graphData.delta" [data]="graphData.delta.data" [layout]="graphData.delta.layout" [config]="config" [useResizeHandler]="true"></plotly-plot>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true">
+    <plotly-plot *ngIf="graphData.hospitalized" [data]="graphData.hospitalized.data" [layout]="graphData.hospitalized.layout" [config]="config" [useResizeHandler]="true"></plotly-plot>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true">
+    <plotly-plot *ngIf="graphData.deltaHospitalized" [data]="graphData.deltaHospitalized.data" [layout]="graphData.deltaHospitalized.layout" [config]="config" [useResizeHandler]="true"></plotly-plot>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="true">
+    <plotly-plot *ngIf="graphData.positivePercentage" [data]="graphData.positivePercentage.data" [layout]="graphData.positivePercentage.layout" [config]="config" [useResizeHandler]="true"></plotly-plot>
+  </mat-expansion-panel>
+</mat-accordion>
