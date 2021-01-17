@@ -32,7 +32,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {AppMatPaginatorIntl} from './i18n/AppMatPaginatorIntl';
 import * as moment from 'moment';
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
-import { RegionDataComponent } from './pages/region-data/region-data.component';
+import { RegionsDataComponent } from './pages/region-data/regions-data.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { SpinnerComponent } from './elements/spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -48,7 +48,7 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
     ChartsComponent,
     DataTableComponent,
     TodayCardComponent,
-    RegionDataComponent,
+    RegionsDataComponent,
     SpinnerComponent,
   ],
   imports: [

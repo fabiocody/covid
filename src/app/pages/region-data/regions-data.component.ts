@@ -6,11 +6,11 @@ import * as moment from 'moment';
 import {max} from 'moment';
 
 @Component({
-  selector: 'app-region-data',
-  templateUrl: './region-data.component.html',
-  styleUrls: ['./region-data.component.scss']
+  selector: 'app-regions-data',
+  templateUrl: './regions-data.component.html',
+  styleUrls: ['./regions-data.component.scss']
 })
-export class RegionDataComponent implements OnInit {
+export class RegionsDataComponent implements OnInit {
   public COLUMNS = ['region', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests'];
   public dataSource = new MatTableDataSource<DataModel>();
 
