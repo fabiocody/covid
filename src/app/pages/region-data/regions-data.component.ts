@@ -20,7 +20,7 @@ export class RegionsDataComponent implements OnInit {
   public date = moment().toDate();
   public maxDate = moment().toDate();
   private lastSort: Sort | undefined;
-  public delta = false;
+  private delta = false;
 
   @ViewChild(MatSort) sort: MatSort | undefined;
 

@@ -12,10 +12,12 @@ import * as moment from 'moment';
 })
 export class DataTableComponent implements OnInit {
   public COLUMNS = ['date', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests', 'ptPercent'];
+  private data: DataModel[] = [];
   private dataSource = new MatTableDataSource<DataModel>();
   public filteredDataSource = new MatTableDataSource<DataModel>();
   public toDate = this.dataSource.data.length > 0 ? this.dataSource.data[0].date : moment().toDate();
   public fromDate = moment(this.toDate).subtract(1, 'month').toDate();
+  private delta = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
@@ -24,17 +26,31 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.data.subscribe(data => {
+      this.data = data;
       this.toDate = data.length > 0 ? data[0].date : moment().toDate();
       this.fromDate = moment(this.toDate).subtract(1, 'month').toDate();
-      this.dataSource = new MatTableDataSource<DataModel>(data);
-      this.filterDataset();
+      this.populateTable();
     });
   }
 
-  filterDataset(): void {
+  public populateTable(): void {
+    if (this.delta) {
+      this.dataSource = new MatTableDataSource<DataModel>(DataService.createDelta(this.data));
+    } else {
+      this.dataSource = new MatTableDataSource<DataModel>(this.data);
+    }
+    this.filterDataset();
+  }
+
+  public filterDataset(): void {
     this.filteredDataSource.data = this.dataSource.data
       .filter(d => moment(d.date).isSameOrAfter(this.fromDate, 'day'))
       .filter(d => moment(d.date).isSameOrBefore(this.toDate, 'day'));
     this.filteredDataSource.paginator = this.paginator as MatPaginator;
+  }
+
+  public setDelta(delta: boolean): void {
+    this.delta = delta;
+    this.populateTable();
   }
 }
