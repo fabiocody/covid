@@ -37,6 +37,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { SpinnerComponent } from './elements/spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSortModule} from '@angular/material/sort';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 PlotlyViaCDNModule.setPlotlyVersion('1.58.4');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
@@ -80,6 +81,7 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatSlideToggleModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'it'},

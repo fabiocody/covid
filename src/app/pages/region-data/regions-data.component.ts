@@ -5,6 +5,7 @@ import {DataService} from '../../services/data/data.service';
 import {DataModel} from '../../model/DataModel';
 import * as moment from 'moment';
 import {max} from 'moment';
+import {PopulationService} from '../../services/population/population.service';
 
 @Component({
   selector: 'app-regions-data',
@@ -12,12 +13,14 @@ import {max} from 'moment';
   styleUrls: ['./regions-data.component.scss']
 })
 export class RegionsDataComponent implements OnInit {
-  public COLUMNS = ['region', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests'];
+  public COLUMNS = ['region', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests', 'ptPercent'];
   private data: DataModel[] = [];
   public dataSource = new MatTableDataSource<DataModel>();
   public date = moment().toDate();
   public maxDate = moment().toDate();
   private lastSort: Sort | undefined;
+  public populationRatio = false;
+  public delta = false;
 
   @ViewChild(MatSort) sort: MatSort | undefined;
 
@@ -36,10 +39,15 @@ export class RegionsDataComponent implements OnInit {
       this.data = data;
       this.populateTable();
     });
+    this.populateTable();
   }
 
   public populateTable(): void {
-    this.dataSource.data = this.data.filter(d => {
+    const tableData = this.data;
+    if (this.delta) {
+
+    }
+    this.dataSource.data = tableData.filter(d => {
       const m = moment(d.date);
       return m.isSameOrAfter(moment(this.date)) && m.isSameOrBefore(moment(this.date).add(1, 'day'));
     });
@@ -77,6 +85,8 @@ export class RegionsDataComponent implements OnInit {
             return RegionsDataComponent.compare(a.icu, b.icu, isAsc);
           case 'tests':
             return RegionsDataComponent.compare(a.tests, b.tests, isAsc);
+          case 'ptPercent':
+            return RegionsDataComponent.compare(a.positiveTestsRatio, b.positiveTestsRatio, isAsc);
           default:
             return 0;
         }

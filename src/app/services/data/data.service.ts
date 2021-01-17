@@ -29,6 +29,18 @@ export class DataService {
     this.downloadData();
   }
 
+  static ediff1d(v: number[]): number[] {
+    const d: number[] = [];
+    for (let i = 0; i < v.length; i++) {
+      if (i === v.length - 1) {
+        d.push(0);
+      } else {
+        d.push(v[i] - v[i + 1]);
+      }
+    }
+    return d;
+  }
+
   private downloadData(): void {
     this.spinnerService.show();
     this.papa.parse(this.ITALY_DATA_URL, {
@@ -58,8 +70,18 @@ export class DataService {
       .map(d => d as DataModel)
       .reverse();
     if (italy) {
+      for (let i = 0; i < data.length; i++) {
+        data[i].positiveTestsRatio = DataModel.computePositiveTestsRatio(data[i], i < data.length - 1 ? data[i + 1] : undefined);
+      }
       this.italyDataSubject.next(data);
     } else {
+      for (const region of this.regionsService.REGIONS) {
+        const regionData = data.filter(d => d.region === region);
+        for (let i = 0; i < regionData.length; i++) {
+          regionData[i].positiveTestsRatio =
+            DataModel.computePositiveTestsRatio(regionData[i], i < regionData.length - 1 ? regionData[i + 1] : undefined);
+        }
+      }
       this.regionsDataSubject.next(data);
     }
   }

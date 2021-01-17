@@ -49,10 +49,10 @@
                   icon="test-tube"></app-today-card>
   <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
                   title="{{'P/T' | uppercase}}"
-                  [data]="deltaData.totalCases / deltaData.tests * 100"
-                  [delta]="((deltaData.totalCases / deltaData.tests) - (yesterdayDeltaData.totalCases / yesterdayDeltaData.tests)) * 100"
-                  [sevenDaysDelta]="((deltaData.totalCases / deltaData.tests) - (lastWeekDelta.totalCases / lastWeekDelta.tests)) * 100"
-                  [trendIconColor]="(deltaData.totalCases / deltaData.tests) - (lastWeekDelta.totalCases / lastWeekDelta.tests) < 0 ? 'primary' : 'accent'"
+                  [data]="todayData.positiveTestsRatio"
+                  [delta]="deltaData.positiveTestsRatio"
+                  [sevenDaysDelta]="sevenDaysDelta.positiveTestsRatio"
+                  [trendIconColor]="sevenDaysDelta.positiveTestsRatio < 0 ? 'primary' : 'accent'"
                   titleTooltip="Rapporto positivi/tamponi"
                   icon="percent"></app-today-card>
 </div>

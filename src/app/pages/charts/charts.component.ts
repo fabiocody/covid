@@ -30,18 +30,6 @@ export class ChartsComponent implements OnInit {
   constructor(private dataService: DataService) {
   }
 
-  private static ediff1d(v: number[]): number[] {
-    const d: number[] = [];
-    for (let i = 0; i < v.length; i++) {
-      if (i === v.length - 1) {
-        d.push(0);
-      } else {
-        d.push(v[i] - v[i + 1]);
-      }
-    }
-    return d;
-  }
-
   ngOnInit(): void {
     this.dataService.data.subscribe(data => {
       this.data = data;
@@ -54,13 +42,13 @@ export class ChartsComponent implements OnInit {
   async createDeltaData(): Promise<void> {
     this.deltaData = [];
     const date = this.data.map(d => d.date);
-    const totalCases = ChartsComponent.ediff1d(this.data.map(d => d.totalCases));
-    const activeCases = ChartsComponent.ediff1d(this.data.map(d => d.activeCases));
-    const recovered = ChartsComponent.ediff1d(this.data.map(d => d.recovered));
-    const deaths = ChartsComponent.ediff1d(this.data.map(d => d.deaths));
-    const hospitalized = ChartsComponent.ediff1d(this.data.map(d => d.hospitalized));
-    const icu = ChartsComponent.ediff1d(this.data.map(d => d.icu));
-    const tests = ChartsComponent.ediff1d(this.data.map(d => d.tests));
+    const totalCases = DataService.ediff1d(this.data.map(d => d.totalCases));
+    const activeCases = DataService.ediff1d(this.data.map(d => d.activeCases));
+    const recovered = DataService.ediff1d(this.data.map(d => d.recovered));
+    const deaths = DataService.ediff1d(this.data.map(d => d.deaths));
+    const hospitalized = DataService.ediff1d(this.data.map(d => d.hospitalized));
+    const icu = DataService.ediff1d(this.data.map(d => d.icu));
+    const tests = DataService.ediff1d(this.data.map(d => d.tests));
     for (let i = 0; i < this.data.length; i++) {
       const data = new DataModel();
       data.date = date[i];
@@ -184,7 +172,7 @@ export class ChartsComponent implements OnInit {
       graphData.positivePercentage = {
         data: [{
           x,
-          y: this.filteredDeltaData.map(d => d.totalCases / d.tests * 100),
+          y: this.filteredData.map(d => d.positiveTestsRatio),
           showLegend: false,
           line: { shape: 'spline' },
         }],

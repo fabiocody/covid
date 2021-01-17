@@ -17,7 +17,10 @@
         <mat-icon style="margin-right: -10px">arrow_drop_down</mat-icon>
       </button>
       <mat-menu #regionMenu>
-        <button *ngFor="let item of regionsService.REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+        <ng-container *ngFor="let item of regionsService.REGIONS">
+          <button mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+          <mat-divider *ngIf="item === 'Italia'"></mat-divider>
+        </ng-container>
         </mat-menu>
     </ng-container>
   </ng-container>
@@ -39,7 +42,10 @@
           {{regionsService.getRegion()}}
         </button>
         <mat-menu #regionMenu>
-          <button *ngFor="let item of regionsService.REGIONS" mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+          <ng-container *ngFor="let item of regionsService.REGIONS">
+            <button mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+            <mat-divider *ngIf="item === 'Italia'"></mat-divider>
+          </ng-container>
         </mat-menu>
       </ng-container>
     </ng-container>

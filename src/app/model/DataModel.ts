@@ -10,6 +10,7 @@ export class DataModel {
   hospitalized!: number;
   icu!: number;
   tests!: number;
+  positiveTestsRatio!: number;
 
   static fromObject(object: any): DataModel | null {
     if (object != null && object.data !== '') {
@@ -27,5 +28,12 @@ export class DataModel {
     } else {
       return null;
     }
+  }
+
+  static computePositiveTestsRatio(recent: DataModel, old?: DataModel): number {
+    if (old === undefined) {
+      return recent.totalCases / recent.tests * 100;
+    }
+    return (recent.totalCases - old.totalCases) / (recent.tests - old.tests) * 100;
   }
 }
