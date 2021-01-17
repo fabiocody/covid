@@ -36,6 +36,7 @@ import { RegionsDataComponent } from './pages/region-data/regions-data.component
 import {MatExpansionModule} from '@angular/material/expansion';
 import { SpinnerComponent } from './elements/spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSortModule} from '@angular/material/sort';
 
 PlotlyViaCDNModule.setPlotlyVersion('1.58.4');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
@@ -78,6 +79,7 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
     FlexLayoutModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    MatSortModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'it'},
