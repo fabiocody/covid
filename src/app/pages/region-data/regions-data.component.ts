@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {Sort} from '@angular/material/sort';
+import {MatSort, Sort} from '@angular/material/sort';
 import {DataService} from '../../services/data/data.service';
 import {DataModel} from '../../model/DataModel';
 import * as moment from 'moment';
@@ -13,7 +13,13 @@ import {max} from 'moment';
 })
 export class RegionsDataComponent implements OnInit {
   public COLUMNS = ['region', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests'];
+  private data: DataModel[] = [];
   public dataSource = new MatTableDataSource<DataModel>();
+  public date = moment().toDate();
+  public maxDate = moment().toDate();
+  private lastSort: Sort | undefined;
+
+  @ViewChild(MatSort) sort: MatSort | undefined;
 
   constructor(private dataService: DataService) {
   }
@@ -24,33 +30,57 @@ export class RegionsDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.regionsData.subscribe(data => {
-      const maxDate = max(data.map(d => moment(d.date)));
-      const filteredData = data.filter(d => moment(d.date).isSame(maxDate));
-      this.dataSource = new MatTableDataSource<DataModel>(filteredData);
-      this.sortData({active: 'region', direction: 'asc'});
+      const maxMoment = max(data.map(d => moment(d.date)));
+      this.maxDate = maxMoment.toDate();
+      this.date = this.maxDate;
+      this.data = data;
+      this.populateTable();
     });
   }
 
+  public populateTable(): void {
+    this.dataSource.data = this.data.filter(d => {
+      const m = moment(d.date);
+      return m.isSameOrAfter(moment(this.date)) && m.isSameOrBefore(moment(this.date).add(1, 'day'));
+    });
+    if (this.sort !== undefined) {
+      this.dataSource.sort = this.sort;
+      const sortState: Sort = this.lastSort !== undefined ? this.lastSort : {active: 'region', direction: 'asc'};
+      this.sort.active = sortState.active;
+      this.sort.direction = sortState.direction;
+      this.sort.sortChange.emit(sortState);
+    }
+  }
+
   public sortData(sort: Sort): void {
+    this.lastSort = sort;
     const data = this.dataSource.data.slice();
     if (!sort.active || sort.direction === '') {
       this.dataSource.data = data;
-      return;
-    }
-
-    this.dataSource.data = data.sort((a, b) => {
+    } else {
       const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'region': return RegionsDataComponent.compare(a.region, b.region, isAsc);
-        case 'total': return RegionsDataComponent.compare(a.totalCases, b.totalCases, isAsc);
-        case 'active': return RegionsDataComponent.compare(a.activeCases, b.activeCases, isAsc);
-        case 'recovered': return RegionsDataComponent.compare(a.recovered, b.recovered, isAsc);
-        case 'deaths': return RegionsDataComponent.compare(a.deaths, b.deaths, isAsc);
-        case 'hospitalized': return RegionsDataComponent.compare(a.hospitalized, b.hospitalized, isAsc);
-        case 'icu': return RegionsDataComponent.compare(a.icu, b.icu, isAsc);
-        case 'tests': return RegionsDataComponent.compare(a.tests, b.tests, isAsc);
-        default: return 0;
-      }
-    });
+      this.dataSource.data = data.sort((a, b) => {
+        switch (sort.active) {
+          case 'region':
+            return RegionsDataComponent.compare(a.region, b.region, isAsc);
+          case 'total':
+            return RegionsDataComponent.compare(a.totalCases, b.totalCases, isAsc);
+          case 'active':
+            return RegionsDataComponent.compare(a.activeCases, b.activeCases, isAsc);
+          case 'recovered':
+            return RegionsDataComponent.compare(a.recovered, b.recovered, isAsc);
+          case 'deaths':
+            return RegionsDataComponent.compare(a.deaths, b.deaths, isAsc);
+          case 'hospitalized':
+            return RegionsDataComponent.compare(a.hospitalized, b.hospitalized, isAsc);
+          case 'icu':
+            return RegionsDataComponent.compare(a.icu, b.icu, isAsc);
+          case 'tests':
+            return RegionsDataComponent.compare(a.tests, b.tests, isAsc);
+          default:
+            return 0;
+        }
+      });
+    }
   }
 }

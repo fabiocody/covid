@@ -65,7 +65,6 @@ export class DataService {
   }
 
   public retrieveData(region: string): void {
-    console.log('retrieveData', region);
     if (region === 'Italia') {
       this.dataSubject.next(this.italyDataSubject.value);
     } else {
