@@ -14,7 +14,8 @@ export class TodayCardComponent implements OnInit {
   @Input() trendIconColor = 'accent';
   @Input() titleTooltip = '';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

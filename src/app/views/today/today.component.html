@@ -35,10 +35,10 @@
                   icon="hospital"></app-today-card>
   <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
                   title="{{'TI' | uppercase}}"
-                  [data]="todayData.icHospitalized"
-                  [delta]="deltaData.icHospitalized"
-                  [sevenDaysDelta]="sevenDaysDelta.icHospitalized"
-                  [trendIconColor]="sevenDaysDelta.icHospitalized < 0 ? 'primary' : 'accent'"
+                  [data]="todayData.icu"
+                  [delta]="deltaData.icu"
+                  [sevenDaysDelta]="sevenDaysDelta.icu"
+                  [trendIconColor]="sevenDaysDelta.icu < 0 ? 'primary' : 'accent'"
                   titleTooltip="Terapie intensive"
                   icon="doctor"></app-today-card>
   <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"

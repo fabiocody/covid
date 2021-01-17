@@ -59,7 +59,7 @@ export class ChartsComponent implements OnInit {
     const recovered = ChartsComponent.ediff1d(this.data.map(d => d.recovered));
     const deaths = ChartsComponent.ediff1d(this.data.map(d => d.deaths));
     const hospitalized = ChartsComponent.ediff1d(this.data.map(d => d.hospitalized));
-    const icHospitalized = ChartsComponent.ediff1d(this.data.map(d => d.icHospitalized));
+    const icu = ChartsComponent.ediff1d(this.data.map(d => d.icu));
     const tests = ChartsComponent.ediff1d(this.data.map(d => d.tests));
     for (let i = 0; i < this.data.length; i++) {
       const data = new DataModel();
@@ -69,7 +69,7 @@ export class ChartsComponent implements OnInit {
       data.recovered = recovered[i];
       data.deaths = deaths[i];
       data.hospitalized = hospitalized[i];
-      data.icHospitalized = icHospitalized[i];
+      data.icu = icu[i];
       data.tests = tests[i];
       this.deltaData.push(data);
     }
@@ -157,7 +157,7 @@ export class ChartsComponent implements OnInit {
           },
           {
             x,
-            y: this.filteredData.map(d => d.icHospitalized),
+            y: this.filteredData.map(d => d.icu),
             name: 'TI',
             line: { shape: 'spline' },
           },
@@ -174,7 +174,7 @@ export class ChartsComponent implements OnInit {
           },
           {
             x,
-            y: this.filteredDeltaData.map(d => d.icHospitalized),
+            y: this.filteredDeltaData.map(d => d.icu),
             name: 'TI',
             line: { shape: 'spline' },
           }

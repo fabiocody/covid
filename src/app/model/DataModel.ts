@@ -7,7 +7,7 @@ export class DataModel {
   recovered!: number;
   deaths!: number;
   hospitalized!: number;
-  icHospitalized!: number;
+  icu!: number;
   tests!: number;
 
   static fromObject(object: any): DataModel | null {
@@ -19,7 +19,7 @@ export class DataModel {
       data.recovered = parseFloat(object.dimessi_guariti);
       data.deaths = parseFloat(object.deceduti);
       data.hospitalized = parseFloat(object.totale_ospedalizzati);
-      data.icHospitalized = parseFloat(object.terapia_intensiva);
+      data.icu = parseFloat(object.terapia_intensiva);
       data.tests = parseFloat(object.tamponi);
       return data;
     } else {

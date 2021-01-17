@@ -5,13 +5,11 @@
     <mat-card-subtitle class="data">{{data | number}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <span *ngIf="delta != 0" class="delta" style="float: left">{{delta > 0 ? '+' : ''}}{{delta | number}}</span>
-    <mat-icon *ngIf="sevenDaysDelta != null"
-              svgIcon="{{sevenDaysDelta === 0 ? 'trending-neutral' : (sevenDaysDelta > 0 ? 'trending-up' : 'trending-down')}}"
-              color="{{trendIconColor}}"
-              style="float: right"
-              matTooltip="Ultima settimana: {{sevenDaysDelta > 0 ? '+' : ''}}{{sevenDaysDelta | number}}"></mat-icon>
-    <mat-icon *ngIf="sevenDaysDelta == null" style="float: right"></mat-icon>
+    <span class="delta">Oggi: {{delta > 0 ? '+' : ''}}{{delta | number}}</span>
+    <div class="mt-2">
+      <span class="week-delta float-left">Ultima settimana: {{sevenDaysDelta > 0 ? '+' : ''}}{{sevenDaysDelta | number}}</span>
+      <mat-icon class="float-right" svgIcon="{{sevenDaysDelta === 0 ? 'trending-neutral' : (sevenDaysDelta > 0 ? 'trending-up' : 'trending-down')}}" color="{{trendIconColor}}"></mat-icon>
+    </div>
     <div style="clear: both"></div>
   </mat-card-content>
 </mat-card>
