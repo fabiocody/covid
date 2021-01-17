@@ -6,6 +6,7 @@ import {DataModel} from '../../model/DataModel';
 import * as moment from 'moment';
 import {max} from 'moment';
 import {PopulationService} from '../../services/population/population.service';
+import {RegionsService} from '../../services/regions/regions.service';
 
 @Component({
   selector: 'app-regions-data',
@@ -19,13 +20,14 @@ export class RegionsDataComponent implements OnInit {
   public date = moment().toDate();
   public maxDate = moment().toDate();
   private lastSort: Sort | undefined;
-  public populationRatio = false;
   public delta = false;
 
   @ViewChild(MatSort) sort: MatSort | undefined;
 
-  constructor(private dataService: DataService) {
-  }
+  constructor(
+    private dataService: DataService,
+    private regionsService: RegionsService
+  ) {}
 
   private static compare(a: number | string, b: number | string, isAsc: boolean): number {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -39,13 +41,23 @@ export class RegionsDataComponent implements OnInit {
       this.data = data;
       this.populateTable();
     });
+  }
+
+  public setDelta(delta: boolean): void {
+    this.delta = delta;
     this.populateTable();
   }
 
   public populateTable(): void {
-    const tableData = this.data;
+    let tableData: DataModel[];
     if (this.delta) {
-
+      tableData = [];
+      for (const region of this.regionsService.REGIONS) {
+        const regionData = this.data.filter(d => d.region === region);
+        tableData.push(...DataService.createDelta(regionData));
+      }
+    } else {
+      tableData = this.data;
     }
     this.dataSource.data = tableData.filter(d => {
       const m = moment(d.date);

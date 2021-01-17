@@ -41,6 +41,35 @@ export class DataService {
     return d;
   }
 
+  static createDelta(data: DataModel[]): DataModel[] {
+    const deltaData: DataModel[] = [];
+    const regions = data.map(d => d.region);
+    const date = data.map(d => d.date);
+    const totalCases = DataService.ediff1d(data.map(d => d.totalCases));
+    const activeCases = DataService.ediff1d(data.map(d => d.activeCases));
+    const recovered = DataService.ediff1d(data.map(d => d.recovered));
+    const deaths = DataService.ediff1d(data.map(d => d.deaths));
+    const hospitalized = DataService.ediff1d(data.map(d => d.hospitalized));
+    const icu = DataService.ediff1d(data.map(d => d.icu));
+    const tests = DataService.ediff1d(data.map(d => d.tests));
+    const positiveTestsRatio = DataService.ediff1d(data.map(d => d.positiveTestsRatio));
+    for (let i = 0; i < data.length; i++) {
+      const dataModel = new DataModel();
+      dataModel.region = regions[i];
+      dataModel.date = date[i];
+      dataModel.totalCases = totalCases[i];
+      dataModel.activeCases = activeCases[i];
+      dataModel.recovered = recovered[i];
+      dataModel.deaths = deaths[i];
+      dataModel.hospitalized = hospitalized[i];
+      dataModel.icu = icu[i];
+      dataModel.tests = tests[i];
+      dataModel.positiveTestsRatio = positiveTestsRatio[i];
+      deltaData.push(dataModel);
+    }
+    return deltaData;
+  }
+
   private downloadData(): void {
     this.spinnerService.show();
     this.papa.parse(this.ITALY_DATA_URL, {

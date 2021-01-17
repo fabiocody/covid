@@ -40,27 +40,7 @@ export class ChartsComponent implements OnInit {
   }
 
   async createDeltaData(): Promise<void> {
-    this.deltaData = [];
-    const date = this.data.map(d => d.date);
-    const totalCases = DataService.ediff1d(this.data.map(d => d.totalCases));
-    const activeCases = DataService.ediff1d(this.data.map(d => d.activeCases));
-    const recovered = DataService.ediff1d(this.data.map(d => d.recovered));
-    const deaths = DataService.ediff1d(this.data.map(d => d.deaths));
-    const hospitalized = DataService.ediff1d(this.data.map(d => d.hospitalized));
-    const icu = DataService.ediff1d(this.data.map(d => d.icu));
-    const tests = DataService.ediff1d(this.data.map(d => d.tests));
-    for (let i = 0; i < this.data.length; i++) {
-      const data = new DataModel();
-      data.date = date[i];
-      data.totalCases = totalCases[i];
-      data.activeCases = activeCases[i];
-      data.recovered = recovered[i];
-      data.deaths = deaths[i];
-      data.hospitalized = hospitalized[i];
-      data.icu = icu[i];
-      data.tests = tests[i];
-      this.deltaData.push(data);
-    }
+    this.deltaData = DataService.createDelta(this.data);
   }
 
   async filterDataset(): Promise<void> {
