@@ -145,7 +145,7 @@ export class ChartsComponent implements OnInit {
             line: { shape: 'spline' },
           },
         ],
-        layout: { title: 'Varizazioni' }
+        layout: { title: 'Variazioni' }
       };
       graphData.hospitalized = {
         data: [
