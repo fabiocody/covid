@@ -19,7 +19,7 @@ export class RegionsDataComponent implements OnInit {
   }
 
   private static compare(a: number | string, b: number | string, isAsc: boolean): number {
-    return (a < b ? -1 : 1) * (isAsc ? -1 : 1);
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export class RegionsDataComponent implements OnInit {
       const maxDate = max(data.map(d => moment(d.date)));
       const filteredData = data.filter(d => moment(d.date).isSame(maxDate));
       this.dataSource = new MatTableDataSource<DataModel>(filteredData);
-      this.sortData({active: 'region', direction: 'desc'});
+      this.sortData({active: 'region', direction: 'asc'});
     });
   }
 
