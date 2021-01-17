@@ -1,7 +1,7 @@
 <mat-card-title>Dati regioni</mat-card-title>
 
 <div class="table-responsive mat-elevation-z3 mt-3">
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="region" matSortDirection="desc" matSortDisableClear>
     <ng-container matColumnDef="region" mat-align-tabs="center">
       <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="region">
         {{ 'Regione' | uppercase }}
