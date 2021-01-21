@@ -1,0 +1,53 @@
+<mat-toolbar color="primary" class="mat-elevation-z6 app-toolbar" fxLayout="row">
+  <mat-icon>coronavirus</mat-icon>
+  <span class="ml-1">{{title | uppercase}}</span>
+  <span class="ml-1" fxHide fxShow.xs>| {{regionsService.getRegion()}}</span>
+  <span class="spacer"></span>
+  <ng-container *ngFor="let item of navbarItems">
+    <ng-container *ngIf="item.icon !== 'place'">
+      <button mat-button routerLink="{{item.routerLink}}" fxShow fxHide.xs>
+        <mat-icon>{{item.icon}}</mat-icon>
+        {{item.label}}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="item.icon === 'place'">
+      <button mat-button [matMenuTriggerFor]="regionMenu" fxShow fxHide.xs>
+        <mat-icon>{{item.icon}}</mat-icon>
+        {{regionsService.getRegion()}}
+        <mat-icon style="margin-right: -10px">arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #regionMenu>
+        <ng-container *ngFor="let item of regionsService.REGIONS">
+          <button mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+          <mat-divider *ngIf="item === 'Italia'"></mat-divider>
+        </ng-container>
+        </mat-menu>
+    </ng-container>
+  </ng-container>
+  <button mat-icon-button [matMenuTriggerFor]="responsiveMenu" fxHide fxShow.xs>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #responsiveMenu>
+    <ng-container *ngFor="let item of navbarItems">
+      <ng-container *ngIf="item.icon !== 'place'">
+        <button mat-menu-item routerLink="{{item.routerLink}}">
+          <mat-icon>{{item.icon}}</mat-icon>
+          {{item.label}}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="item.icon === 'place'">
+        <mat-divider></mat-divider>
+        <button mat-menu-item [matMenuTriggerFor]="regionMenu">
+          <mat-icon>{{item.icon}}</mat-icon>
+          {{regionsService.getRegion()}}
+        </button>
+        <mat-menu #regionMenu>
+          <ng-container *ngFor="let item of regionsService.REGIONS">
+            <button mat-menu-item (click)="onSelectMenuItem(item)">{{item}}</button>
+            <mat-divider *ngIf="item === 'Italia'"></mat-divider>
+          </ng-container>
+        </mat-menu>
+      </ng-container>
+    </ng-container>
+  </mat-menu>
+</mat-toolbar>

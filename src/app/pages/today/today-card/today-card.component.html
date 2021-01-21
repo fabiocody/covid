@@ -1,0 +1,15 @@
+<mat-card class="mat-elevation-z3">
+  <mat-card-header class="mt-2">
+    <mat-icon mat-card-avatar svgIcon="{{icon}}" color="accent"></mat-icon>
+    <mat-card-title matTooltip="{{titleTooltip}}">{{title | uppercase}}</mat-card-title>
+    <mat-card-subtitle class="data">{{data | number}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <span class="delta">Oggi: {{delta > 0 ? '+' : ''}}{{delta | number}}</span>
+    <div class="mt-2">
+      <span class="week-delta float-left">Ultima settimana: {{sevenDaysDelta > 0 ? '+' : ''}}{{sevenDaysDelta | number}}</span>
+      <mat-icon class="float-right" svgIcon="{{sevenDaysDelta === 0 ? 'trending-neutral' : (sevenDaysDelta > 0 ? 'trending-up' : 'trending-down')}}" color="{{trendIconColor}}"></mat-icon>
+    </div>
+    <div style="clear: both"></div>
+  </mat-card-content>
+</mat-card>
