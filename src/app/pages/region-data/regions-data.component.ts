@@ -5,7 +5,6 @@ import {DataService} from '../../services/data/data.service';
 import {DataModel} from '../../model/DataModel';
 import * as moment from 'moment';
 import {max} from 'moment';
-import {PopulationService} from '../../services/population/population.service';
 import {RegionsService} from '../../services/regions/regions.service';
 
 @Component({
@@ -21,6 +20,7 @@ export class RegionsDataComponent implements OnInit {
   public maxDate = moment().toDate();
   private lastSort: Sort | undefined;
   private delta = false;
+  private populationRatio = false;
 
   @ViewChild(MatSort) sort: MatSort | undefined;
 
@@ -48,16 +48,22 @@ export class RegionsDataComponent implements OnInit {
     this.populateTable();
   }
 
+  public setPopulationRatio(value: boolean): void {
+    this.populationRatio = value;
+    this.populateTable();
+  }
+
   public populateTable(): void {
-    let tableData: DataModel[];
+    let tableData: DataModel[] = this.data;
     if (this.delta) {
       tableData = [];
       for (const region of this.regionsService.REGIONS) {
         const regionData = this.data.filter(d => d.region === region);
         tableData.push(...DataService.createDelta(regionData));
       }
-    } else {
-      tableData = this.data;
+    }
+    if (this.populationRatio) {
+      tableData = tableData.map(d => DataModel.cloneWithPopulation(d, this.dataService.population[d.region]));
     }
     this.dataSource.data = tableData.filter(d => {
       const m = moment(d.date);

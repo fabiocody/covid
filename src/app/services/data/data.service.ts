@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {DataModel} from '../../model/DataModel';
 import {Papa} from 'ngx-papaparse';
 import {RegionsService} from '../regions/regions.service';
@@ -20,6 +20,31 @@ export class DataService {
   public regionsData = this.regionsDataSubject.asObservable();
   private dataSubject = new BehaviorSubject<DataModel[]>([]);
   public data = this.dataSubject.asObservable();
+
+  public population: { [region: string]: number } = {
+    Italia: 59641488,
+    Abruzzo: 1293941,
+    Basilicata: 553254,
+    Calabria: 1894110,
+    Campania: 5712143,
+    'Emilia-Romagna': 4464119,
+    'Friuli Venezia Giulia': 1206216,
+    Lazio: 5755700,
+    Liguria: 1524826,
+    Lombardia: 10027602,
+    Marche: 1512672,
+    Molise: 300516,
+    'P.A. Bolzano': 532644,
+    'P.A. Trento': 545425,
+    Piemonte: 4311217,
+    Puglia: 3953305,
+    Sardegna: 1611621,
+    Sicilia: 4875290,
+    Toscana: 3692555,
+    Umbria: 870165,
+    'Valle d\'Aosta': 125034,
+    Veneto: 4879133
+  };
 
   constructor(
     private spinnerService: SpinnerService,

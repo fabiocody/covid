@@ -62,10 +62,14 @@
 <div class="mt-4" style="text-align: center">
   <mat-card-subtitle *ngIf="todayData != undefined">Ultimo aggiornamento: {{todayData.date | amCalendar | lowercase}}</mat-card-subtitle>
   <mat-card-subtitle>
-    Fonte dei dati:
+    Fonte dati COVID:
     <a href="https://github.com/pcm-dpc/COVID-19" target="_blank">
       <mat-icon svgIcon="github"></mat-icon>
       pcm-dpc/COVID-19
     </a>
+  </mat-card-subtitle>
+  <mat-card-subtitle>
+    Fonte dati popolazione:
+    <a href="http://dati.istat.it/Index.aspx?DataSetCode=DCIS_POPRES1" target="_blank">ISTAT</a>
   </mat-card-subtitle>
 </div>

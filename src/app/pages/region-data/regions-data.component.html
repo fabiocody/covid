@@ -19,9 +19,9 @@
       <div class="col-12">
         <mat-slide-toggle (change)="setDelta($event.checked)">Variazioni</mat-slide-toggle>
       </div>
-      <!--div class="col-12">
-        <mat-slide-toggle (change)="populateTable(false)">Rispetto alla popolazione</mat-slide-toggle>
-      </div-->
+      <div class="col-12">
+        <mat-slide-toggle (change)="setPopulationRatio($event.checked)">Ogni 100.000 abitanti</mat-slide-toggle>
+      </div>
     </div>
   </div>
 </div>

@@ -18,6 +18,7 @@ export class DataTableComponent implements OnInit {
   public toDate = this.dataSource.data.length > 0 ? this.dataSource.data[0].date : moment().toDate();
   public fromDate = moment(this.toDate).subtract(1, 'month').toDate();
   private delta = false;
+  private populationRatio = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
@@ -34,10 +35,12 @@ export class DataTableComponent implements OnInit {
   }
 
   public populateTable(): void {
+    this.dataSource = new MatTableDataSource<DataModel>(this.data);
     if (this.delta) {
-      this.dataSource = new MatTableDataSource<DataModel>(DataService.createDelta(this.data));
-    } else {
-      this.dataSource = new MatTableDataSource<DataModel>(this.data);
+      this.dataSource.data = DataService.createDelta(this.dataSource.data);
+    }
+    if (this.populationRatio) {
+      this.dataSource.data = this.dataSource.data.map(d => DataModel.cloneWithPopulation(d, this.dataService.population[d.region]));
     }
     this.filterDataset();
   }
@@ -51,6 +54,11 @@ export class DataTableComponent implements OnInit {
 
   public setDelta(delta: boolean): void {
     this.delta = delta;
+    this.populateTable();
+  }
+
+  public setPopulationRatio(value: boolean): void {
+    this.populationRatio = value;
     this.populateTable();
   }
 }

@@ -30,6 +30,20 @@ export class DataModel {
     }
   }
 
+  static cloneWithPopulation(origin: DataModel, population: number): DataModel {
+    const data = new DataModel();
+    data.date = origin.date;
+    data.region = origin.region;
+    data.totalCases = Math.round(origin.totalCases / population * 100000);
+    data.activeCases = Math.round(origin.activeCases / population * 100000);
+    data.recovered = Math.round(origin.recovered / population * 100000);
+    data.deaths = Math.round(origin.deaths / population * 100000);
+    data.hospitalized = Math.round(origin.hospitalized / population * 100000);
+    data.icu = Math.round(origin.icu / population * 100000);
+    data.tests = Math.round(origin.tests / population * 100000);
+    return data;
+  }
+
   static computePositiveTestsRatio(recent: DataModel, old?: DataModel): number {
     if (old === undefined) {
       return recent.totalCases / recent.tests * 100;
