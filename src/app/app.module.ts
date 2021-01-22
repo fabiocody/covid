@@ -20,7 +20,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {DateAdapter, MatNativeDateModule} from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import {MomentModule} from 'ngx-moment';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
@@ -38,6 +38,7 @@ import { SpinnerComponent } from './elements/spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSortModule} from '@angular/material/sort';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {AppDateAdapter} from './i18n/AppDateAdapter';
 
 PlotlyViaCDNModule.setPlotlyVersion('1.58.4');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
@@ -85,7 +86,8 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'it'},
-    {provide: MatPaginatorIntl, useClass: AppMatPaginatorIntl}
+    {provide: MatPaginatorIntl, useClass: AppMatPaginatorIntl},
+    {provide: DateAdapter, useClass: AppDateAdapter}
   ],
   bootstrap: [AppComponent]
 })
