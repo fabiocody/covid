@@ -5,10 +5,25 @@
     <mat-card-subtitle class="data">{{data | number}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <span class="delta">Oggi: {{delta > 0 ? '+' : ''}}{{delta | number}}</span>
-    <div class="mt-2">
-      <span class="week-delta float-left">Ultima settimana: {{sevenDaysDelta > 0 ? '+' : ''}}{{sevenDaysDelta | number}}</span>
-      <mat-icon class="float-right" svgIcon="{{sevenDaysDelta === 0 ? 'trending-neutral' : (sevenDaysDelta > 0 ? 'trending-up' : 'trending-down')}}" color="{{trendIconColor}}"></mat-icon>
+    <div>
+      <span class="delta float-left">Oggi: {{delta > 0 ? '+' : ''}}{{delta | number}}</span>
+      <mat-icon class="float-right"
+                svgIcon="{{delta === 0 ? 'trending-neutral' : (delta > 0 ? 'trending-up' : 'trending-down')}}"
+                color="{{delta < 0 ? 'primary' : 'accent'}}"></mat-icon>
+    </div>
+    <div style="clear: both"></div>
+    <div>
+      <span class="delta float-left">1 settimana: {{sevenDaysDelta > 0 ? '+' : ''}}{{sevenDaysDelta | number}}</span>
+      <mat-icon class="float-right"
+                svgIcon="{{sevenDaysDelta === 0 ? 'trending-neutral' : (sevenDaysDelta > 0 ? 'trending-up' : 'trending-down')}}"
+                color="{{sevenDaysDelta < 0 ? 'primary' : 'accent'}}"></mat-icon>
+    </div>
+    <div style="clear: both"></div>
+    <div>
+      <span class="delta float-left">4 settimane: {{fourWeeksDelta > 0 ? '+' : ''}}{{fourWeeksDelta | number}}</span>
+      <mat-icon class="float-right"
+                svgIcon="{{fourWeeksDelta === 0 ? 'trending-neutral' : (fourWeeksDelta > 0 ? 'trending-up' : 'trending-down')}}"
+                color="{{fourWeeksDelta < 0 ? 'primary' : 'accent'}}"></mat-icon>
     </div>
     <div style="clear: both"></div>
   </mat-card-content>

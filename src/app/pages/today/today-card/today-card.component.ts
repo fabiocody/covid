@@ -11,7 +11,7 @@ export class TodayCardComponent implements OnInit {
   @Input() delta = 0;
   @Input() icon = '';
   @Input() sevenDaysDelta = 0;
-  @Input() trendIconColor = 'accent';
+  @Input() fourWeeksDelta = 0;
   @Input() titleTooltip = '';
 
   constructor() {
