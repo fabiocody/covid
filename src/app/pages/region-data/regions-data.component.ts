@@ -19,8 +19,9 @@ export class RegionsDataComponent implements OnInit {
   public date = moment().toDate();
   public maxDate = moment().toDate();
   private lastSort: Sort | undefined;
-  private delta = false;
-  private populationRatio = false;
+  public delta = false;
+  public populationRatio = false;
+  public weekDelta = false;
 
   @ViewChild(MatSort) sort: MatSort | undefined;
 
@@ -43,13 +44,24 @@ export class RegionsDataComponent implements OnInit {
     });
   }
 
-  public setDelta(delta: boolean): void {
-    this.delta = delta;
+  public setPopulationRatio(value: boolean): void {
+    this.populationRatio = value;
     this.populateTable();
   }
 
-  public setPopulationRatio(value: boolean): void {
-    this.populationRatio = value;
+  public setDelta(delta: boolean): void {
+    this.delta = delta;
+    if (this.delta && this.weekDelta) {
+      this.weekDelta = false;
+    }
+    this.populateTable();
+  }
+
+  public setWeekDelta(value: boolean): void {
+    this.weekDelta = value;
+    if (this.delta && this.weekDelta) {
+      this.delta = false;
+    }
     this.populateTable();
   }
 
@@ -60,6 +72,13 @@ export class RegionsDataComponent implements OnInit {
       for (const region of this.regionsService.REGIONS) {
         const regionData = this.data.filter(d => d.region === region);
         tableData.push(...DataService.createDelta(regionData));
+      }
+    }
+    if (this.weekDelta) {
+      tableData = [];
+      for (const region of this.regionsService.REGIONS) {
+        const regionData = this.data.filter(d => d.region === region);
+        tableData.push(...DataService.createWeekDelta(regionData));
       }
     }
     if (this.populationRatio) {

@@ -95,6 +95,46 @@ export class DataService {
     return deltaData;
   }
 
+  static createWeekDelta(data: DataModel[]): DataModel[] {
+    if (data.length > 0) {
+      console.log(data[0].date);
+    }
+    const deltaData: DataModel[] = [];
+    const regions = data.map(d => d.region);
+    const date = data.map(d => d.date);
+    const totalCases = DataService.ediff1d(data.map(d => d.totalCases));
+    const activeCases = DataService.ediff1d(data.map(d => d.activeCases));
+    const recovered = DataService.ediff1d(data.map(d => d.recovered));
+    const deaths = DataService.ediff1d(data.map(d => d.deaths));
+    const hospitalized = DataService.ediff1d(data.map(d => d.hospitalized));
+    const icu = DataService.ediff1d(data.map(d => d.icu));
+    const tests = DataService.ediff1d(data.map(d => d.tests));
+    const positiveTestsRatio = DataService.ediff1d(data.map(d => d.positiveTestsRatio));
+    for (let i = 0; i < data.length; i++) {
+      const dataModel = new DataModel();
+      dataModel.region = regions[i];
+      dataModel.date = date[i];
+      dataModel.totalCases = this.sumPrev7(totalCases, i);
+      dataModel.activeCases = this.sumPrev7(activeCases, i);
+      dataModel.recovered = this.sumPrev7(recovered, i);
+      dataModel.deaths = this.sumPrev7(deaths, i);
+      dataModel.hospitalized = this.sumPrev7(hospitalized, i);
+      dataModel.icu = this.sumPrev7(icu, i);
+      dataModel.tests = this.sumPrev7(tests, i);
+      dataModel.positiveTestsRatio = this.sumPrev7(positiveTestsRatio, i);
+      deltaData.push(dataModel);
+    }
+    return deltaData;
+  }
+
+  private static sumPrev7(data: number[], index: number): number {
+    let sum = 0;
+    for (let i = index, count = 0; i < data.length && count < 7; i++, count++) {
+      sum += data[i];
+    }
+    return sum;
+  }
+
   private downloadData(): void {
     this.spinnerService.show();
     this.papa.parse(this.ITALY_DATA_URL, {
