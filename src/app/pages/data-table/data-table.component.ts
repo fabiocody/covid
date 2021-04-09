@@ -1,16 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DataModel} from '../../model/DataModel';
 import {DataService} from '../../services/data/data.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import * as moment from 'moment';
+import {SubSink} from 'subsink';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent implements OnInit, OnDestroy {
   public COLUMNS = ['date', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests', 'ptPercent'];
   private data: DataModel[] = [];
   private dataSource = new MatTableDataSource<DataModel>();
@@ -19,6 +20,7 @@ export class DataTableComponent implements OnInit {
   public fromDate = moment(this.toDate).subtract(1, 'month').toDate();
   private delta = false;
   private populationRatio = false;
+  private subs = new SubSink();
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
@@ -26,12 +28,16 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.data.subscribe(data => {
+    this.subs.sink = this.dataService.data.subscribe(data => {
       this.data = data;
       this.toDate = data.length > 0 ? data[0].date : moment().toDate();
       this.fromDate = moment(this.toDate).subtract(1, 'month').toDate();
       this.populateTable();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   public populateTable(): void {

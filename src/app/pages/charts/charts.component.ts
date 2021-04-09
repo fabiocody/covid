@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataModel} from '../../model/DataModel';
 import {DataService} from '../../services/data/data.service';
 import {Plotly} from 'angular-plotly.js/lib/plotly.interface';
 import * as moment from 'moment';
+import {SubSink} from 'subsink';
 
 class GraphData {
   data: Plotly.Data;
@@ -17,7 +18,7 @@ class GraphData {
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss']
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnInit, OnDestroy {
   private data: DataModel[] = [];
   private deltaData: DataModel[] = [];
   private filteredData: DataModel[] = [];
@@ -26,17 +27,22 @@ export class ChartsComponent implements OnInit {
   public fromDate = moment(this.toDate).subtract(14, 'days').toDate();
   public graphData: GraphData = new GraphData();
   public config = { locale: 'it-IT' };
+  private subs = new SubSink();
 
   constructor(private dataService: DataService) {
   }
 
   ngOnInit(): void {
-    this.dataService.data.subscribe(data => {
+    this.subs.sink = this.dataService.data.subscribe(data => {
       this.data = data;
       this.toDate = this.data.length > 0 ? this.data[0].date : moment().toDate();
       this.fromDate = moment(this.toDate).subtract(14, 'days').toDate();
       this.createDeltaData().then(_ => this.filterDataset());
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   async createDeltaData(): Promise<void> {
