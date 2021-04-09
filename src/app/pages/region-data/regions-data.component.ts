@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
 import {DataService} from '../../services/data/data.service';
@@ -6,13 +6,14 @@ import {DataModel} from '../../model/DataModel';
 import * as moment from 'moment';
 import {max} from 'moment';
 import {RegionsService} from '../../services/regions/regions.service';
+import {SubSink} from 'subsink';
 
 @Component({
   selector: 'app-regions-data',
   templateUrl: './regions-data.component.html',
   styleUrls: ['./regions-data.component.scss']
 })
-export class RegionsDataComponent implements OnInit {
+export class RegionsDataComponent implements OnInit, OnDestroy {
   public COLUMNS = ['region', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests', 'ptPercent'];
   private data: DataModel[] = [];
   public dataSource = new MatTableDataSource<DataModel>();
@@ -22,6 +23,7 @@ export class RegionsDataComponent implements OnInit {
   public delta = false;
   public populationRatio = false;
   public weekDelta = false;
+  private subs = new SubSink();
 
   @ViewChild(MatSort) sort: MatSort | undefined;
 
@@ -35,13 +37,17 @@ export class RegionsDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.regionsData.subscribe(data => {
+    this.subs.sink = this.dataService.regionsData.subscribe(data => {
       const maxMoment = max(data.map(d => moment(d.date)));
       this.maxDate = maxMoment.toDate();
       this.date = this.maxDate;
       this.data = data;
       this.populateTable();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   public setPopulationRatio(value: boolean): void {
