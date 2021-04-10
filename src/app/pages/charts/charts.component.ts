@@ -56,7 +56,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
     this.filteredDeltaData = this.deltaData
       .filter(d => moment(d.date).isSameOrAfter(this.fromDate, 'day'))
       .filter(d => moment(d.date).isSameOrBefore(this.toDate, 'day'));
-    this.plot();
+    this.plot().then();
   }
 
   async plot(): Promise<void> {
