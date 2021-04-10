@@ -1,11 +1,12 @@
 const express = require('express');
-const RateLimit = require('express-rate-limit');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
+app.set('trust proxy', 1);
 
-const limiter = new RateLimit({
+const limiter = rateLimit({
   windowMs: 1000,
-  max: 10,
+  max: 300,
 });
 
 app.use(limiter);
