@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DataModel} from '../../model/DataModel';
 import {DataService} from '../../services/data/data.service';
 import {MatTableDataSource} from '@angular/material/table';
@@ -11,18 +11,18 @@ import {SubSink} from 'subsink';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit, OnDestroy {
+export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
   public COLUMNS = ['date', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests', 'ptPercent'];
   private data: DataModel[] = [];
   private dataSource = new MatTableDataSource<DataModel>();
   public filteredDataSource = new MatTableDataSource<DataModel>();
-  public toDate = this.dataSource.data.length > 0 ? this.dataSource.data[0].date : moment().toDate();
-  public fromDate = moment(this.toDate).subtract(1, 'month').toDate();
+  public toDate = moment().toDate();
+  public fromDate = moment().subtract(1, 'month').toDate();
   private delta = false;
   private populationRatio = false;
   private subs = new SubSink();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private dataService: DataService) {
   }
@@ -40,8 +40,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
+  ngAfterViewInit(): void {
+    this.filteredDataSource.paginator = this.paginator;
+  }
+
   public populateTable(): void {
-    this.dataSource = new MatTableDataSource<DataModel>(this.data);
+    this.dataSource.data = this.data;
     if (this.delta) {
       this.dataSource.data = DataService.createDelta(this.dataSource.data);
     }
@@ -55,7 +59,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.filteredDataSource.data = this.dataSource.data
       .filter(d => moment(d.date).isSameOrAfter(this.fromDate, 'day'))
       .filter(d => moment(d.date).isSameOrBefore(this.toDate, 'day'));
-    this.filteredDataSource.paginator = this.paginator as MatPaginator;
+    this.filteredDataSource.paginator = this.paginator;
   }
 
   public setDelta(delta: boolean): void {
