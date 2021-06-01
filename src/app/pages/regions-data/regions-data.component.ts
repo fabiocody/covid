@@ -4,7 +4,6 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {DataService} from '../../services/data/data.service';
 import {DataModel} from '../../model/DataModel';
 import * as moment from 'moment';
-import {max} from 'moment';
 import {RegionsService} from '../../services/regions/regions.service';
 import {SubSink} from 'subsink';
 
@@ -38,8 +37,7 @@ export class RegionsDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.sink = this.dataService.regionsData.subscribe(data => {
-      const maxMoment = max(data.map(d => moment(d.date)));
-      this.maxDate = maxMoment.toDate();
+      this.maxDate = moment.max(data.map(d => moment(d.date))).toDate();
       this.date = this.maxDate;
       this.data = data;
       this.populateTable();
