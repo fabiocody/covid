@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    },
+    {
+      "name": "data",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "urls": [
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap",
+          "https://fonts.googleapis.com/icon?family=Material+Icons",
+          "https://cdn.plot.ly/plotly-locale-it-latest.js",
+          "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json",
+          "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json"
+        ]
+      }
+    }
+  ]
+}
