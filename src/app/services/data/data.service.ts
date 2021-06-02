@@ -52,6 +52,10 @@ export class DataService {
     this.init().then();
   }
 
+  private static computeTestRatio(d: DataModel, i: number, data: DataModel[]): void {
+    d.positiveTestsRatio = DataModel.computeTestRatio(data[i], i < data.length - 1 ? data[i + 1] : undefined);
+  }
+
   private async init(): Promise<void> {
     this.spinnerService.show();
     await this.downloadData(this.ITALY_DATA_URL);
@@ -67,17 +71,12 @@ export class DataService {
       .map(d => d as DataModel)
       .reverse();
     if (url === this.ITALY_DATA_URL) {
-      for (let i = 0; i < data.length; i++) {
-        data[i].positiveTestsRatio = DataModel.computePositiveTestsRatio(data[i], i < data.length - 1 ? data[i + 1] : undefined);
-      }
+      data.forEach(DataService.computeTestRatio);
       this.italyDataSubject.next(data);
     } else if (url === this.REGIONS_DATA_URL) {
       for (const region of this.regionsService.REGIONS) {
         const regionData = data.filter(d => d.region === region);
-        for (let i = 0; i < regionData.length; i++) {
-          regionData[i].positiveTestsRatio =
-            DataModel.computePositiveTestsRatio(regionData[i], i < regionData.length - 1 ? regionData[i + 1] : undefined);
-        }
+        regionData.forEach(DataService.computeTestRatio);
       }
       this.regionsDataSubject.next(data);
     }

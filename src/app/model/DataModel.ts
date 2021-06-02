@@ -12,7 +12,7 @@ export class DataModel {
   tests!: number;
   positiveTestsRatio!: number;
 
-  static fromObject(object: any): DataModel | null {
+  public static fromObject(object: any): DataModel | null {
     if (object != null && object.data !== '') {
       const data = new DataModel();
       data.date = moment.utc(object.data).toDate();
@@ -30,7 +30,7 @@ export class DataModel {
     }
   }
 
-  static cloneWithPopulation(origin: DataModel, population: number): DataModel {
+  public static cloneWithPopulation(origin: DataModel, population: number): DataModel {
     const data = new DataModel();
     data.date = origin.date;
     data.region = origin.region;
@@ -44,7 +44,7 @@ export class DataModel {
     return data;
   }
 
-  static computePositiveTestsRatio(recent: DataModel, old?: DataModel): number {
+  public static computeTestRatio(recent: DataModel, old?: DataModel): number {
     if (old === undefined) {
       return recent.totalCases / recent.tests * 100;
     }
