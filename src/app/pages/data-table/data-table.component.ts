@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import * as moment from 'moment';
 import {SubSink} from 'subsink';
+import {DeltaService} from '../../services/delta/delta.service';
 
 @Component({
   selector: 'app-data-table',
@@ -47,7 +48,7 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
   public populateTable(): void {
     this.dataSource.data = this.data;
     if (this.delta) {
-      this.dataSource.data = DataService.createDelta(this.dataSource.data);
+      this.dataSource.data = DeltaService.createDelta(this.dataSource.data);
     }
     if (this.populationRatio) {
       this.dataSource.data = this.dataSource.data.map(d => DataModel.cloneWithPopulation(d, this.dataService.population[d.region]));

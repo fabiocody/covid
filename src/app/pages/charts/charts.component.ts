@@ -4,6 +4,7 @@ import {DataService} from '../../services/data/data.service';
 import {Plotly} from 'angular-plotly.js/lib/plotly.interface';
 import * as moment from 'moment';
 import {SubSink} from 'subsink';
+import {DeltaService} from '../../services/delta/delta.service';
 
 class GraphData {
   data: Plotly.Data;
@@ -46,7 +47,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
   }
 
   async createDeltaData(): Promise<void> {
-    this.deltaData = DataService.createDelta(this.data);
+    this.deltaData = DeltaService.createDelta(this.data);
   }
 
   async filterDataset(): Promise<void> {

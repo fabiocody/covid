@@ -6,6 +6,7 @@ import {DataModel} from '../../model/DataModel';
 import * as moment from 'moment';
 import {RegionsService} from '../../services/regions/regions.service';
 import {SubSink} from 'subsink';
+import {DeltaService} from '../../services/delta/delta.service';
 
 @Component({
   selector: 'app-regions-data',
@@ -75,14 +76,14 @@ export class RegionsDataComponent implements OnInit, OnDestroy {
       tableData = [];
       for (const region of this.regionsService.REGIONS) {
         const regionData = this.data.filter(d => d.region === region);
-        tableData.push(...DataService.createDelta(regionData));
+        tableData.push(...DeltaService.createDelta(regionData));
       }
     }
     if (this.weekDelta) {
       tableData = [];
       for (const region of this.regionsService.REGIONS) {
         const regionData = this.data.filter(d => d.region === region);
-        tableData.push(...DataService.createWeekDelta(regionData));
+        tableData.push(...DeltaService.createWeekDelta(regionData));
       }
     }
     if (this.populationRatio) {
