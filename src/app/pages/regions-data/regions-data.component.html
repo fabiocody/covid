@@ -1,31 +1,13 @@
 <mat-card-title>Dati regioni</mat-card-title>
 
-<div class="row mt-4 mb-3 align-items-center">
-  <mat-form-field class="col-12 col-sm-3">
-    <mat-label>Data</mat-label>
-    <input matInput
-           [(ngModel)]="date"
-           [matDatepicker]="datePicker"
-           [max]="maxDate"
-           (click)="datePicker.open()"
-           (dateChange)="populateTable()"
-           [readonly]="true"
-           name="fromDate">
-    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-    <mat-datepicker #datePicker></mat-datepicker>
-  </mat-form-field>
+<div class="row mt-4 align-items-center">
+  <div class="col-12 col-sm-3">
+    <app-date-filter [(fromDate)]="date" (fromDateChange)="populateTable()" [showToDate]="false"></app-date-filter>
+  </div>
   <div class="col-12 col-sm-9">
-    <div class="row">
-      <div class="col-12">
-        <mat-slide-toggle (change)="setPopulationRatio($event.checked)" [ngModel]="populationRatio">Ogni 100.000 abitanti</mat-slide-toggle>
-      </div>
-      <div class="col-12">
-        <mat-slide-toggle (change)="setDelta($event.checked)" [ngModel]="delta">Variazioni</mat-slide-toggle>
-      </div>
-      <div class="col-12">
-        <mat-slide-toggle (change)="setWeekDelta($event.checked)" [ngModel]="weekDelta">Variazioni settimanali</mat-slide-toggle>
-      </div>
-    </div>
+    <mat-slide-toggle (change)="setPopulationRatio($event.checked)" [ngModel]="populationRatio">Ogni 100.000 abitanti</mat-slide-toggle>
+    <mat-slide-toggle (change)="setDelta($event.checked)" [ngModel]="delta">Variazioni</mat-slide-toggle>
+    <mat-slide-toggle (change)="setWeekDelta($event.checked)" [ngModel]="weekDelta">Variazioni settimanali</mat-slide-toggle>
   </div>
 </div>
 

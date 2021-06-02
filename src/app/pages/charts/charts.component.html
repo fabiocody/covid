@@ -2,34 +2,8 @@
 
 <div class="row mt-4">
   <div class="col-12 col-md-6">
-    <div class="row">
-      <mat-form-field class="col-6">
-        <mat-label>Da</mat-label>
-        <input matInput
-               [(ngModel)]="fromDate"
-               [matDatepicker]="fromDatePicker"
-               [max]="toDate"
-               (click)="fromDatePicker.open()"
-               (dateChange)="filterDataset()"
-               [readonly]="true"
-               name="fromDate">
-        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #fromDatePicker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field class="col-6">
-        <mat-label>A</mat-label>
-        <input matInput
-               [(ngModel)]="toDate"
-               [matDatepicker]="toDatePicker"
-               [min]="fromDate"
-               (click)="toDatePicker.open()"
-               (dateChange)="filterDataset()"
-               [readonly]="true"
-               name="toDate">
-        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #toDatePicker></mat-datepicker>
-      </mat-form-field>
-    </div>
+    <app-date-filter [(fromDate)]="fromDate" (fromDateChange)="filterDataset()"
+                     [(toDate)]="toDate" (toDateChange)="filterDataset()"></app-date-filter>
   </div>
 </div>
 

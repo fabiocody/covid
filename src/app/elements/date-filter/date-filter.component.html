@@ -1,0 +1,28 @@
+<div class="row">
+  <mat-form-field class="{{showToDate ? 'col-6' : 'col-12'}}">
+    <mat-label>{{showToDate ? 'Da' : 'Data'}}</mat-label>
+    <input matInput
+           [(ngModel)]="fromDate"
+           [matDatepicker]="fromDatePicker"
+           [max]="toDate"
+           (click)="fromDatePicker.open()"
+           (dateChange)="fromDateChange.emit(fromDate)"
+           [readonly]="true"
+           name="fromDate">
+    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromDatePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field *ngIf="showToDate" class="col-6">
+    <mat-label>A</mat-label>
+    <input matInput
+           [(ngModel)]="toDate"
+           [matDatepicker]="toDatePicker"
+           [min]="fromDate"
+           (click)="toDatePicker.open()"
+           (dateChange)="toDateChange.emit(toDate)"
+           [readonly]="true"
+           name="toDate">
+    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #toDatePicker></mat-datepicker>
+  </mat-form-field>
+</div>

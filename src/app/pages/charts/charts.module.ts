@@ -6,6 +6,7 @@ import {MaterialModule} from '../../modules/material.module';
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
 import {ChartsComponent} from './charts.component';
 import {FormsModule} from '@angular/forms';
+import {DateFilterModule} from '../../elements/date-filter/date-filter.module';
 
 PlotlyViaCDNModule.setPlotlyVersion('1.58.4');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
@@ -20,6 +21,7 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
     MaterialModule,
     FormsModule,
     PlotlyViaCDNModule,
+    DateFilterModule,
   ]
 })
 export class ChartsModule {
