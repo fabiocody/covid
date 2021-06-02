@@ -32,11 +32,10 @@
       "updateMode": "prefetch",
       "resources": {
         "urls": [
-          "https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap",
-          "https://fonts.googleapis.com/icon?family=Material+Icons",
-          "https://cdn.plot.ly/plotly-locale-it-latest.js",
-          "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json",
-          "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json"
+          "https://fonts.googleapis.com/**",
+          "https://fonts.gstatic.com/**",
+          "https://cdn.plot.ly/**",
+          "https://raw.githubusercontent.com/pcm-dpc/COVID-19/**"
         ]
       }
     }
