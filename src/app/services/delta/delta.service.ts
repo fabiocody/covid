@@ -45,15 +45,12 @@ export class DeltaService {
   }
 
   public static createDelta(data: DataModel[]): DataModel[] {
-    // FIXME: This does not work
     const multiData = DeltaService.createMultiDataModel(data);
     const deltaData: DataModel[] = [];
     for (let i = 0; i < data.length; i++) {
       const dataModel = new DataModel();
-      for (const key of Object.keys(dataModel)) {
-        if (dataModel.hasOwnProperty(key)) {
-          dataModel[key] = multiData[key][i];
-        }
+      for (const key of Object.keys(multiData)) {
+        dataModel[key] = multiData[key][i];
       }
       deltaData.push(dataModel);
     }
@@ -61,20 +58,17 @@ export class DeltaService {
   }
 
   public static createWeekDelta(data: DataModel[]): DataModel[] {
-    // FIXME: This does not work
     const multiData = DeltaService.createMultiDataModel(data);
     const deltaData: DataModel[] = [];
     for (let i = 0; i < data.length; i++) {
       const dataModel = new DataModel();
-      for (const key of Object.keys(dataModel)) {
-        if (dataModel.hasOwnProperty(key)) {
-          if (key === 'region') {
-            dataModel[key] = multiData[key][i];
-          } else if (key === 'date') {
-            dataModel[key] = multiData[key][i];
-          } else {
-            dataModel[key] = DeltaService.sumPrev7(multiData[key], i);
-          }
+      for (const key of Object.keys(multiData)) {
+        if (key === 'region') {
+          dataModel[key] = multiData[key][i];
+        } else if (key === 'date') {
+          dataModel[key] = multiData[key][i];
+        } else {
+          dataModel[key] = DeltaService.sumPrev7(multiData[key], i);
         }
       }
       deltaData.push(dataModel);
