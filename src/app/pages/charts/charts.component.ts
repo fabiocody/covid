@@ -5,6 +5,7 @@ import {Plotly} from 'angular-plotly.js/lib/plotly.interface';
 import * as moment from 'moment';
 import {SubSink} from 'subsink';
 import {DeltaService} from '../../services/delta/delta.service';
+import {DynamicScriptLoaderService, LoadableScripts} from '../../services/dynamic-script-loader/dynamic-script-loader.service';
 
 class GraphData {
   data: Plotly.Data;
@@ -30,10 +31,13 @@ export class ChartsComponent implements OnInit, OnDestroy {
   public config = { locale: 'it-IT' };
   private subs = new SubSink();
 
-  constructor(private dataService: DataService) {
+  constructor(
+    private dataService: DataService,
+    private scriptLoader: DynamicScriptLoaderService) {
   }
 
   ngOnInit(): void {
+    this.scriptLoader.load(LoadableScripts.plotlyItLocale);
     this.subs.sink = this.dataService.data.subscribe(data => {
       this.data = data;
       this.toDate = this.data.length > 0 ? this.data[0].date : moment().toDate();
@@ -44,6 +48,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
+    this.scriptLoader.unload(LoadableScripts.plotlyItLocale);
   }
 
   async createDeltaData(): Promise<void> {
