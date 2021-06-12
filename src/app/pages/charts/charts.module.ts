@@ -8,7 +8,7 @@ import {ChartsComponent} from './charts.component';
 import {FormsModule} from '@angular/forms';
 import {DateFilterModule} from '../../elements/date-filter/date-filter.module';
 
-PlotlyViaCDNModule.setPlotlyVersion('1.58.4');
+PlotlyViaCDNModule.setPlotlyVersion('2.0.0');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
 
 @NgModule({
