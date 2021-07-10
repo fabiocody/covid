@@ -9,9 +9,9 @@ import {MatIconRegistry} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
 import {SpinnerComponent} from './elements/spinner/spinner.component';
 import {MaterialModule} from './modules/material.module';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
 import * as moment from 'moment';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
