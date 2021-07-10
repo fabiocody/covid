@@ -5,10 +5,15 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavbarComponent} from './elements/navbar/navbar.component';
-import {MatIconRegistry} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
 import {SpinnerComponent} from './elements/spinner/spinner.component';
-import {MaterialModule} from './modules/material.module';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatButtonModule} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import * as moment from 'moment';
@@ -24,7 +29,13 @@ import * as moment from 'moment';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MaterialModule,
+    MatToolbarModule,
+    MatIconModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
