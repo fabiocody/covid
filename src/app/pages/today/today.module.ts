@@ -8,6 +8,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     declarations: [TodayComponent, TodayCardComponent],
@@ -19,6 +20,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         MatDividerModule,
         MatIconModule,
         MatTooltipModule,
+        MatButtonModule,
     ],
 })
 export class TodayModule {}

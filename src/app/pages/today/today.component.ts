@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService} from '../../services/data/data.service';
 import {DataModel} from '../../model/DataModel';
 import {SubSink} from 'subsink';
+import {SwUpdate} from '@angular/service-worker';
 
 @Component({
     selector: 'app-today',
@@ -17,7 +18,7 @@ export class TodayComponent implements OnInit, OnDestroy {
     public fourWeeksDelta = new DataModel();
     private subs = new SubSink();
 
-    constructor(private dataService: DataService) {}
+    constructor(private dataService: DataService, public update: SwUpdate) {}
 
     ngOnInit(): void {
         this.subs.sink = this.dataService.data.subscribe(data => {
@@ -37,5 +38,9 @@ export class TodayComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subs.unsubscribe();
+    }
+
+    public activateUpdate() {
+        this.update.activateUpdate().then(document.location.reload);
     }
 }

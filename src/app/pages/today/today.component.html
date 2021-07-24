@@ -82,6 +82,9 @@
 <div class="mt-4" style="text-align: center">
     <mat-card-subtitle *ngIf="todayData != undefined">
         Ultimo aggiornamento: {{ todayData.date | amCalendar | lowercase }}
+        <button mat-icon-button class="ml-1" *ngIf="update.available | async" (click)="activateUpdate()">
+            <mat-icon>cloud_download</mat-icon>
+        </button>
     </mat-card-subtitle>
     <mat-card-subtitle>
         Fonte dati COVID:

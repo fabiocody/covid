@@ -3,7 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {DataModel} from '../../model/DataModel';
 import {HttpClient} from '@angular/common/http';
 import {RegionsService} from '../regions/regions.service';
-import {SpinnerService} from '../spinner/spinner.service';
+import {SpinnerService} from '../../elements/spinner/spinner.service';
 
 @Injectable({
     providedIn: 'root',
