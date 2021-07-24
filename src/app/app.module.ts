@@ -1,7 +1,7 @@
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import '@angular/common/locales/global/it';
-import {AppRoutingModule} from './app.routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavbarComponent} from './elements/navbar/navbar.component';

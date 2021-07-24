@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ChartsRoutingModule} from './charts.routing.module';
+import {ChartsRoutingModule} from './charts-routing.module';
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
 import {ChartsComponent} from './charts.component';
 import {FormsModule} from '@angular/forms';

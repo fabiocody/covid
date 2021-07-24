@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TodayRoutingModule} from './today.routing.module';
+import {TodayRoutingModule} from './today-routing.module';
 import {TodayComponent} from './today.component';
 import {TodayCardComponent} from './today-card/today-card.component';
 import {MomentModule} from 'ngx-moment';
