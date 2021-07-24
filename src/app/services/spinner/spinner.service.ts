@@ -4,25 +4,24 @@ import {ComponentPortal} from '@angular/cdk/portal';
 import {SpinnerComponent} from '../../elements/spinner/spinner.component';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class SpinnerService {
-  private overlayRef: OverlayRef | null = null;
+    private overlayRef: OverlayRef | null = null;
 
-  constructor(private overlay: Overlay) {
-  }
+    constructor(private overlay: Overlay) {}
 
-  public show(): void {
-    if (!this.overlayRef) {
-      this.overlayRef = this.overlay.create();
+    public show(): void {
+        if (!this.overlayRef) {
+            this.overlayRef = this.overlay.create();
+        }
+        const spinnerOverlayPortal = new ComponentPortal(SpinnerComponent);
+        this.overlayRef.attach(spinnerOverlayPortal);
     }
-    const spinnerOverlayPortal = new ComponentPortal(SpinnerComponent);
-    this.overlayRef.attach(spinnerOverlayPortal);
-  }
 
-  public hide(): void {
-    if (!!this.overlayRef) {
-      this.overlayRef.detach();
+    public hide(): void {
+        if (!!this.overlayRef) {
+            this.overlayRef.detach();
+        }
     }
-  }
 }

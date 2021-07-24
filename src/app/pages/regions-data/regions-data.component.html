@@ -1,82 +1,94 @@
 <mat-card-title>Dati regioni</mat-card-title>
 
 <div class="row mt-4 align-items-center">
-  <div class="col-12 col-sm-3">
-    <app-date-filter [(fromDate)]="date" (fromDateChange)="populateTable()" [showToDate]="false"></app-date-filter>
-  </div>
-  <div class="col-12 col-sm-9">
-    <mat-slide-toggle (change)="setPopulationRatio($event.checked)" [ngModel]="populationRatio">Ogni 100.000 abitanti</mat-slide-toggle>
-    <mat-slide-toggle (change)="setDelta($event.checked)" [ngModel]="delta">Variazioni</mat-slide-toggle>
-    <mat-slide-toggle (change)="setWeekDelta($event.checked)" [ngModel]="weekDelta">Variazioni settimanali</mat-slide-toggle>
-  </div>
+    <div class="col-12 col-sm-3">
+        <app-date-filter [(fromDate)]="date" (fromDateChange)="populateTable()" [showToDate]="false"></app-date-filter>
+    </div>
+    <div class="col-12 col-sm-9">
+        <mat-slide-toggle (change)="setPopulationRatio($event.checked)" [ngModel]="populationRatio">
+            Ogni 100.000 abitanti
+        </mat-slide-toggle>
+        <mat-slide-toggle (change)="setDelta($event.checked)" [ngModel]="delta">Variazioni</mat-slide-toggle>
+        <mat-slide-toggle (change)="setWeekDelta($event.checked)" [ngModel]="weekDelta">
+            Variazioni settimanali
+        </mat-slide-toggle>
+    </div>
 </div>
 
 <div class="table-responsive mat-elevation-z3 mt-3 mt-sm-0">
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="region" matSortDirection="asc" matSortDisableClear>
-    <ng-container matColumnDef="region" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="region">
-        {{ 'Regione' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.region}}</td>
-    </ng-container>
+    <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        (matSortChange)="sortData($event)"
+        matSortActive="region"
+        matSortDirection="asc"
+        matSortDisableClear
+    >
+        <ng-container matColumnDef="region" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="region">
+                {{ "Regione" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.region }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="total" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="total">
-        {{ 'Totali' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.totalCases | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="total" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="total">
+                {{ "Totali" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.totalCases | number }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="active" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="active">
-        {{ 'Attivi' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.activeCases | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="active" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="active">
+                {{ "Attivi" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.activeCases | number }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="recovered" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="recovered">
-        {{ 'Guariti' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.recovered | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="recovered" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="recovered">
+                {{ "Guariti" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.recovered | number }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="deaths" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="deaths">
-        {{ 'Morti' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.deaths | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="deaths" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="deaths">
+                {{ "Morti" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.deaths | number }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="hospitalized" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="hospitalized">
-        {{ 'Ricoverati' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.hospitalized | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="hospitalized" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="hospitalized">
+                {{ "Ricoverati" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.hospitalized | number }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="icu" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="icu">
-        {{ 'TI' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.icu | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="icu" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="icu">
+                {{ "TI" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.icu | number }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="tests" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="tests">
-        {{ 'Tamponi' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.tests | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="tests" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="tests">
+                {{ "Tamponi" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.tests | number }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="ptPercent" mat-align-tabs="center">
-      <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="ptPercent">
-        {{ 'P/T' | uppercase }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.positiveTestsRatio | number}}</td>
-    </ng-container>
+        <ng-container matColumnDef="ptPercent" mat-align-tabs="center">
+            <th class="font-weight-bold" mat-header-cell *matHeaderCellDef mat-sort-header="ptPercent">
+                {{ "P/T" | uppercase }}
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.positiveTestsRatio | number }}</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="COLUMNS; sticky: true"></tr>
-    <tr mat-row *matRowDef="let element; columns: COLUMNS"></tr>
-  </table>
+        <tr mat-header-row *matHeaderRowDef="COLUMNS; sticky: true"></tr>
+        <tr mat-row *matRowDef="let element; columns: COLUMNS"></tr>
+    </table>
 </div>

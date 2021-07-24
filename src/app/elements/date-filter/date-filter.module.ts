@@ -8,25 +8,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {DateAdapter, MatNativeDateModule} from '@angular/material/core';
 import {AppDateAdapter} from '../../i18n/AppDateAdapter';
 
-
 @NgModule({
-  declarations: [
-    DateFilterComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
-  exports: [
-    DateFilterComponent,
-  ],
-  providers: [
-    {provide: DateAdapter, useClass: AppDateAdapter},
-  ]
+    declarations: [DateFilterComponent],
+    imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule],
+    exports: [DateFilterComponent],
+    providers: [{provide: DateAdapter, useClass: AppDateAdapter}],
 })
-export class DateFilterModule {
-}
+export class DateFilterModule {}

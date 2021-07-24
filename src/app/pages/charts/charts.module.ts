@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ChartsRoutingModule} from './charts-routing.module';
+import {ChartsRoutingModule} from './charts.routing.module';
 import {PlotlyViaCDNModule} from 'angular-plotly.js';
 import {ChartsComponent} from './charts.component';
 import {FormsModule} from '@angular/forms';
@@ -12,18 +12,15 @@ PlotlyViaCDNModule.setPlotlyVersion('2.0.0');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
 
 @NgModule({
-  declarations: [
-    ChartsComponent
-  ],
-  imports: [
-    ChartsRoutingModule,
-    CommonModule,
-    FormsModule,
-    PlotlyViaCDNModule,
-    DateFilterModule,
-    MatCardModule,
-    MatExpansionModule,
-  ]
+    declarations: [ChartsComponent],
+    imports: [
+        ChartsRoutingModule,
+        CommonModule,
+        FormsModule,
+        PlotlyViaCDNModule,
+        DateFilterModule,
+        MatCardModule,
+        MatExpansionModule,
+    ],
 })
-export class ChartsModule {
-}
+export class ChartsModule {}

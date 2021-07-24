@@ -2,24 +2,43 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class RegionsService {
-  public REGIONS = [
-    'Italia', 'Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia',
-    'Marche', 'Molise', 'P.A. Bolzano', 'P.A. Trento', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Umbria', 'Valle d\'Aosta', 'Veneto'
-  ];
-  private selectedRegionSubject = new BehaviorSubject<string>(this.REGIONS[0]);
-  public selectedRegion = this.selectedRegionSubject.asObservable();
+    public REGIONS = [
+        'Italia',
+        'Abruzzo',
+        'Basilicata',
+        'Calabria',
+        'Campania',
+        'Emilia-Romagna',
+        'Friuli Venezia Giulia',
+        'Lazio',
+        'Liguria',
+        'Lombardia',
+        'Marche',
+        'Molise',
+        'P.A. Bolzano',
+        'P.A. Trento',
+        'Piemonte',
+        'Puglia',
+        'Sardegna',
+        'Sicilia',
+        'Toscana',
+        'Umbria',
+        "Valle d'Aosta",
+        'Veneto',
+    ];
+    private selectedRegionSubject = new BehaviorSubject<string>(this.REGIONS[0]);
+    public selectedRegion = this.selectedRegionSubject.asObservable();
 
-  constructor() {
-  }
+    constructor() {}
 
-  getRegion(): string {
-    return this.selectedRegionSubject.value;
-  }
+    getRegion(): string {
+        return this.selectedRegionSubject.value;
+    }
 
-  setRegion(region: string): void {
-    this.selectedRegionSubject.next(region);
-  }
+    setRegion(region: string): void {
+        this.selectedRegionSubject.next(region);
+    }
 }

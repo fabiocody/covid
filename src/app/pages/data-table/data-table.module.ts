@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DataTableRoutingModule} from './data-table-routing.module';
+import {DataTableRoutingModule} from './data-table.routing.module';
 import {DataTableComponent} from './data-table.component';
 import {MomentModule} from 'ngx-moment';
 import {FormsModule} from '@angular/forms';
@@ -11,25 +11,19 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {AppMatPaginatorIntl} from '../../i18n/AppMatPaginatorIntl';
 
-
 @NgModule({
-  declarations: [
-    DataTableComponent
-  ],
-  imports: [
-    DataTableRoutingModule,
-    CommonModule,
-    MomentModule,
-    FormsModule,
-    DateFilterModule,
-    MatCardModule,
-    MatSlideToggleModule,
-    MatTableModule,
-    MatPaginatorModule,
-  ],
-  providers: [
-    {provide: MatPaginatorIntl, useClass: AppMatPaginatorIntl},
-  ]
+    declarations: [DataTableComponent],
+    imports: [
+        DataTableRoutingModule,
+        CommonModule,
+        MomentModule,
+        FormsModule,
+        DateFilterModule,
+        MatCardModule,
+        MatSlideToggleModule,
+        MatTableModule,
+        MatPaginatorModule,
+    ],
+    providers: [{provide: MatPaginatorIntl, useClass: AppMatPaginatorIntl}],
 })
-export class DataTableModule {
-}
+export class DataTableModule {}

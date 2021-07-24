@@ -2,33 +2,33 @@ $tableSelectedColor: #f5f5f5;
 $tableHoverColor: #f5f5f5;
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
 .mat-header-cell {
-  font-size: 16px;
-  text-align: left;
-  padding: 0 10px;
+    font-size: 16px;
+    text-align: left;
+    padding: 0 10px;
 }
 
 .mat-cell {
-  font-size: 14px;
-  text-align: left;
-  padding: 0 10px;
+    font-size: 14px;
+    text-align: left;
+    padding: 0 10px;
 }
 
 tr.mat-row:hover {
-  background-color: $tableHoverColor;
+    background-color: $tableHoverColor;
 }
 
 td {
-  white-space: pre;
+    white-space: pre;
 }
 
 mat-slide-toggle {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 mat-slide-toggle:last-child {
-  margin-left: 0;
+    margin-left: 0;
 }

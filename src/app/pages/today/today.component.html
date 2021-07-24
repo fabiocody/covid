@@ -1,79 +1,97 @@
 <mat-card-title>Oggi</mat-card-title>
 
 <div *ngIf="todayData" class="row mt-4">
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'Casi totali' | uppercase}}"
-                  [data]="todayData.totalCases"
-                  [delta]="deltaData.totalCases"
-                  [sevenDaysDelta]="sevenDaysDelta.totalCases"
-                  [fourWeeksDelta]="fourWeeksDelta.totalCases"
-                  icon="chart-donut"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'Casi attivi' | uppercase}}"
-                  [data]="todayData.activeCases"
-                  [delta]="deltaData.activeCases"
-                  [sevenDaysDelta]="sevenDaysDelta.activeCases"
-                  [fourWeeksDelta]="fourWeeksDelta.activeCases"
-                  icon="plus"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'Guariti' | uppercase}}"
-                  [data]="todayData.recovered"
-                  [delta]="deltaData.recovered"
-                  [sevenDaysDelta]="sevenDaysDelta.recovered"
-                  [fourWeeksDelta]="fourWeeksDelta.recovered"
-                  icon="check"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'Morti' | uppercase}}"
-                  [data]="todayData.deaths"
-                  [delta]="deltaData.deaths"
-                  [sevenDaysDelta]="sevenDaysDelta.deaths"
-                  [fourWeeksDelta]="fourWeeksDelta.deaths"
-                  icon="grave-stone"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'Ricoverati' | uppercase}}"
-                  [data]="todayData.hospitalized"
-                  [delta]="deltaData.hospitalized"
-                  [sevenDaysDelta]="sevenDaysDelta.hospitalized"
-                  [fourWeeksDelta]="fourWeeksDelta.hospitalized"
-                  icon="hospital"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'TI' | uppercase}}"
-                  [data]="todayData.icu"
-                  [delta]="deltaData.icu"
-                  [sevenDaysDelta]="sevenDaysDelta.icu"
-                  [fourWeeksDelta]="fourWeeksDelta.icu"
-                  titleTooltip="Terapie intensive"
-                  icon="doctor"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'Tamponi' | uppercase}}"
-                  [data]="todayData.tests"
-                  [delta]="deltaData.tests"
-                  [sevenDaysDelta]="sevenDaysDelta.tests"
-                  [fourWeeksDelta]="fourWeeksDelta.tests"
-                  icon="test-tube"></app-today-card>
-  <app-today-card class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
-                  title="{{'Incidenza' | uppercase}}"
-                  [data]="todayData.positiveTestsRatio"
-                  [delta]="deltaData.positiveTestsRatio"
-                  [sevenDaysDelta]="sevenDaysDelta.positiveTestsRatio"
-                  [fourWeeksDelta]="fourWeeksDelta.positiveTestsRatio"
-                  titleTooltip="Rapporto positivi/tamponi"
-                  icon="percent"></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'Casi totali' | uppercase }}"
+        [data]="todayData.totalCases"
+        [delta]="deltaData.totalCases"
+        [sevenDaysDelta]="sevenDaysDelta.totalCases"
+        [fourWeeksDelta]="fourWeeksDelta.totalCases"
+        icon="chart-donut"
+    ></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'Casi attivi' | uppercase }}"
+        [data]="todayData.activeCases"
+        [delta]="deltaData.activeCases"
+        [sevenDaysDelta]="sevenDaysDelta.activeCases"
+        [fourWeeksDelta]="fourWeeksDelta.activeCases"
+        icon="plus"
+    ></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'Guariti' | uppercase }}"
+        [data]="todayData.recovered"
+        [delta]="deltaData.recovered"
+        [sevenDaysDelta]="sevenDaysDelta.recovered"
+        [fourWeeksDelta]="fourWeeksDelta.recovered"
+        icon="check"
+    ></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'Morti' | uppercase }}"
+        [data]="todayData.deaths"
+        [delta]="deltaData.deaths"
+        [sevenDaysDelta]="sevenDaysDelta.deaths"
+        [fourWeeksDelta]="fourWeeksDelta.deaths"
+        icon="grave-stone"
+    ></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'Ricoverati' | uppercase }}"
+        [data]="todayData.hospitalized"
+        [delta]="deltaData.hospitalized"
+        [sevenDaysDelta]="sevenDaysDelta.hospitalized"
+        [fourWeeksDelta]="fourWeeksDelta.hospitalized"
+        icon="hospital"
+    ></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'TI' | uppercase }}"
+        [data]="todayData.icu"
+        [delta]="deltaData.icu"
+        [sevenDaysDelta]="sevenDaysDelta.icu"
+        [fourWeeksDelta]="fourWeeksDelta.icu"
+        titleTooltip="Terapie intensive"
+        icon="doctor"
+    ></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'Tamponi' | uppercase }}"
+        [data]="todayData.tests"
+        [delta]="deltaData.tests"
+        [sevenDaysDelta]="sevenDaysDelta.tests"
+        [fourWeeksDelta]="fourWeeksDelta.tests"
+        icon="test-tube"
+    ></app-today-card>
+    <app-today-card
+        class="col col-12 col-sm-6 col-md-6 col-xl-3 mb-3"
+        title="{{ 'Incidenza' | uppercase }}"
+        [data]="todayData.positiveTestsRatio"
+        [delta]="deltaData.positiveTestsRatio"
+        [sevenDaysDelta]="sevenDaysDelta.positiveTestsRatio"
+        [fourWeeksDelta]="fourWeeksDelta.positiveTestsRatio"
+        titleTooltip="Rapporto positivi/tamponi"
+        icon="percent"
+    ></app-today-card>
 </div>
 
 <mat-divider class="mt-3"></mat-divider>
 
 <div class="mt-4" style="text-align: center">
-  <mat-card-subtitle *ngIf="todayData != undefined">Ultimo aggiornamento: {{todayData.date | amCalendar | lowercase}}</mat-card-subtitle>
-  <mat-card-subtitle>
-    Fonte dati COVID:
-    <a href="https://github.com/pcm-dpc/COVID-19" target="_blank" rel="noopener">
-      <mat-icon svgIcon="github"></mat-icon>
-      pcm-dpc/COVID-19
-    </a>
-  </mat-card-subtitle>
-  <mat-card-subtitle>
-    Fonte dati popolazione:
-    <a href="http://dati.istat.it/Index.aspx?DataSetCode=DCIS_POPRES1" target="_blank" rel="noopener">ISTAT</a>
-  </mat-card-subtitle>
+    <mat-card-subtitle *ngIf="todayData != undefined">
+        Ultimo aggiornamento: {{ todayData.date | amCalendar | lowercase }}
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        Fonte dati COVID:
+        <a href="https://github.com/pcm-dpc/COVID-19" target="_blank" rel="noopener">
+            <mat-icon svgIcon="github"></mat-icon>
+            pcm-dpc/COVID-19
+        </a>
+    </mat-card-subtitle>
+    <mat-card-subtitle>
+        Fonte dati popolazione:
+        <a href="http://dati.istat.it/Index.aspx?DataSetCode=DCIS_POPRES1" target="_blank" rel="noopener">ISTAT</a>
+    </mat-card-subtitle>
 </div>
