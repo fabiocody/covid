@@ -34,6 +34,7 @@ export class TodayComponent implements OnInit, OnDestroy {
                 }
             }
         });
+        this.subs.sink = this.update.available.subscribe(event => console.log(event));
     }
 
     ngOnDestroy(): void {
