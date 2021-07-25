@@ -15,6 +15,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ServiceWorkerModule} from '@angular/service-worker';
+import {UpdateModule} from './services/update/update.module';
 import {environment} from '../environments/environment';
 import * as moment from 'moment';
 
@@ -32,6 +33,7 @@ import * as moment from 'moment';
         MatMenuModule,
         MatDividerModule,
         MatProgressSpinnerModule,
+        UpdateModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
             // Register the ServiceWorker as soon as the app is stable

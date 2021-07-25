@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {UpdateService} from './services/update/update.service';
 
 @Component({
     selector: 'app-root',
@@ -8,7 +9,9 @@ import {Component, OnInit} from '@angular/core';
 export class AppComponent implements OnInit {
     title = 'COVID';
 
-    constructor() {}
+    constructor(private updateService: UpdateService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.updateService.start();
+    }
 }
