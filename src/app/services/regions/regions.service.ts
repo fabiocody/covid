@@ -32,8 +32,6 @@ export class RegionsService {
     private selectedRegionSubject = new BehaviorSubject<string>(this.REGIONS[0]);
     public selectedRegion = this.selectedRegionSubject.asObservable();
 
-    constructor() {}
-
     getRegion(): string {
         return this.selectedRegionSubject.value;
     }

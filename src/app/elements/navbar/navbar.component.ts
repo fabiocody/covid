@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {RegionsService} from '../../services/regions/regions.service';
 
 export interface NavbarItem {
@@ -12,7 +12,7 @@ export interface NavbarItem {
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
     @Input() public title = '';
 
     public navbarItems: NavbarItem[] = [
@@ -44,8 +44,6 @@ export class NavbarComponent implements OnInit {
     ];
 
     constructor(public regionsService: RegionsService) {}
-
-    ngOnInit(): void {}
 
     public onSelectMenuItem(item: string): void {
         this.regionsService.setRegion(item);
