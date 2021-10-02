@@ -10,3 +10,5 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
+      time: "06:00"
+      timezone: "Europe/Rome"
