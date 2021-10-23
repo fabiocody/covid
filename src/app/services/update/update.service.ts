@@ -15,7 +15,9 @@ export class UpdateService implements OnDestroy {
 
     public start(): void {
         this.subs.sink = this.update.available.subscribe(event => {
+            console.log(event);
             if (event.type === 'UPDATE_AVAILABLE') {
+                console.log('Update available');
                 this.openSnackBar();
             }
         });
