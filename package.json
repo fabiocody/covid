@@ -31,7 +31,7 @@
         "angular-plotly.js": "^4.0.4",
         "bootstrap": "^4.6.0",
         "express": "^4.17.1",
-        "express-rate-limit": "^5.5.0",
+        "express-rate-limit": "^5.5.1",
         "moment": "^2.29.1",
         "ngx-moment": "^5.0.0",
         "remove": "^0.1.5",
