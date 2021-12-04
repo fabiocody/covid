@@ -1,7 +1,8 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import {SwUpdate} from '@angular/service-worker';
+import {SwUpdate, VersionReadyEvent} from '@angular/service-worker';
 import {SubSink} from 'subsink';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable()
 export class UpdateService implements OnDestroy {
@@ -14,13 +15,22 @@ export class UpdateService implements OnDestroy {
     }
 
     public start(): void {
-        this.subs.sink = this.update.available.subscribe(event => {
-            console.log(event);
-            if (event.type === 'UPDATE_AVAILABLE') {
-                console.log('Update available');
-                this.openSnackBar();
-            }
-        });
+        this.subs.sink = this.update.versionUpdates
+            .pipe(
+                filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'),
+                map(evt => ({
+                    type: 'UPDATE_AVAILABLE',
+                    current: evt.currentVersion,
+                    available: evt.latestVersion,
+                })),
+            )
+            .subscribe(event => {
+                console.log(event);
+                if (event.type === 'UPDATE_AVAILABLE') {
+                    console.log('Update available');
+                    this.openSnackBar();
+                }
+            });
     }
 
     private openSnackBar(): void {
