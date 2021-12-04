@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "node server.js",
+        "start": "ng serve",
         "prebuild": "rimraf dist",
         "build": "ng build -c production",
         "test": "ng test",
