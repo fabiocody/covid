@@ -17,7 +17,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {UpdateModule} from './services/update/update.module';
 import {environment} from '../environments/environment';
-import * as moment from 'moment';
 
 @NgModule({
     declarations: [AppComponent, NavbarComponent, SpinnerComponent],
@@ -46,7 +45,6 @@ import * as moment from 'moment';
 })
 export class AppModule {
     constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
-        moment.locale('it');
         matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg'));
     }
 }

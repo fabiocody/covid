@@ -3,10 +3,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSort, Sort} from '@angular/material/sort';
 import {DataService} from '../../services/data/data.service';
 import {DataModel} from '../../model/DataModel';
-import * as moment from 'moment';
 import {RegionsService} from '../../services/regions/regions.service';
 import {SubSink} from 'subsink';
 import {DeltaService} from '../../services/delta/delta.service';
+import {DateService} from '../../services/date/date.service';
 
 @Component({
     selector: 'app-regions-data',
@@ -17,8 +17,8 @@ export class RegionsDataComponent implements OnInit, OnDestroy {
     public COLUMNS = ['region', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests', 'ptPercent'];
     private data: DataModel[] = [];
     public dataSource = new MatTableDataSource<DataModel>();
-    public date = moment().toDate();
-    public maxDate = moment().toDate();
+    public date = new Date();
+    public maxDate = new Date();
     private lastSort: Sort | undefined;
     public delta = false;
     public populationRatio = false;
@@ -35,7 +35,7 @@ export class RegionsDataComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subs.sink = this.dataService.regionsData.subscribe(data => {
-            this.maxDate = moment.max(data.map(d => moment(d.date))).toDate();
+            this.maxDate = DateService.max(data.map(d => d.date));
             this.date = this.maxDate;
             this.data = data;
             this.populateTable();
@@ -86,10 +86,9 @@ export class RegionsDataComponent implements OnInit, OnDestroy {
         if (this.populationRatio) {
             tableData = tableData.map(d => DataModel.cloneWithPopulation(d, this.dataService.population[d.region]));
         }
-        this.dataSource.data = tableData.filter(d => {
-            const m = moment(d.date);
-            return m.isSameOrAfter(moment(this.date)) && m.isSameOrBefore(moment(this.date).add(1, 'day'));
-        });
+        this.dataSource.data = tableData.filter(
+            d => d.date >= this.date && d.date <= DateService.addDays(this.date, 1),
+        );
         if (this.sort !== undefined) {
             this.dataSource.sort = this.sort;
             const sortState: Sort = this.lastSort !== undefined ? this.lastSort : {active: 'region', direction: 'asc'};

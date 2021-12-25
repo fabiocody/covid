@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DataTableRoutingModule} from './data-table-routing.module';
 import {DataTableComponent} from './data-table.component';
-import {MomentModule} from 'ngx-moment';
 import {FormsModule} from '@angular/forms';
 import {DateFilterModule} from '../../elements/date-filter/date-filter.module';
 import {MatCardModule} from '@angular/material/card';
@@ -16,7 +15,6 @@ import {AppMatPaginatorIntl} from '../../i18n/AppMatPaginatorIntl';
     imports: [
         DataTableRoutingModule,
         CommonModule,
-        MomentModule,
         FormsModule,
         DateFilterModule,
         MatCardModule,

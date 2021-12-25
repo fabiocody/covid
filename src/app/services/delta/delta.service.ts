@@ -14,8 +14,6 @@ interface MultiDataModel {
 }
 
 export class DeltaService {
-    constructor() {}
-
     private static ediff1d(v: number[]): number[] {
         const d: number[] = [];
         for (let i = 0; i < v.length; i++) {
