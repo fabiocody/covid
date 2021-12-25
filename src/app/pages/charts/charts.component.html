@@ -12,52 +12,23 @@
 </div>
 
 <mat-accordion multi>
-    <mat-expansion-panel *ngIf="graphData.data" [expanded]="true">
-        <plotly-plot
-            [data]="graphData.data.data"
-            [layout]="graphData.data.layout"
-            [config]="config"
-            [useResizeHandler]="true"
-        ></plotly-plot>
-    </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="graphData.delta" [expanded]="true">
-        <plotly-plot
-            [data]="graphData.delta.data"
-            [layout]="graphData.delta.layout"
-            [config]="config"
-            [useResizeHandler]="true"
-        ></plotly-plot>
-    </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="graphData.hospitalized" [expanded]="true">
-        <plotly-plot
-            [data]="graphData.hospitalized.data"
-            [layout]="graphData.hospitalized.layout"
-            [config]="config"
-            [useResizeHandler]="true"
-        ></plotly-plot>
-    </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="graphData.deltaHospitalized" [expanded]="true">
-        <plotly-plot
-            [data]="graphData.deltaHospitalized.data"
-            [layout]="graphData.deltaHospitalized.layout"
-            [config]="config"
-            [useResizeHandler]="true"
-        ></plotly-plot>
-    </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="graphData.positivePercentage" [expanded]="true">
-        <plotly-plot
-            [data]="graphData.positivePercentage.data"
-            [layout]="graphData.positivePercentage.layout"
-            [config]="config"
-            [useResizeHandler]="true"
-        ></plotly-plot>
-    </mat-expansion-panel>
-    <mat-expansion-panel *ngIf="graphData.tests" [expanded]="true">
-        <plotly-plot
-            [data]="graphData.tests.data"
-            [layout]="graphData.tests.layout"
-            [config]="config"
-            [useResizeHandler]="true"
-        ></plotly-plot>
-    </mat-expansion-panel>
+    <ng-container *ngFor="let graph of graphs">
+        <mat-expansion-panel [expanded]="true">
+            <plotly-plot
+                [data]="graphData[graph].data"
+                [layout]="graphData[graph].layout"
+                [config]="config"
+                [useResizeHandler]="true"
+            ></plotly-plot>
+            <button
+                mat-mini-fab
+                color="primary"
+                class="full-screen-button"
+                matTooltip="Schermo intero"
+                (click)="openFullScreen(graph)"
+            >
+                <mat-icon>fullscreen</mat-icon>
+            </button>
+        </mat-expansion-panel>
+    </ng-container>
 </mat-accordion>

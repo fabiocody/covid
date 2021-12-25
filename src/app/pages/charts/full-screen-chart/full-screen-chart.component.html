@@ -1,0 +1,15 @@
+<plotly-plot
+    [data]="data.graphData.data"
+    [layout]="data.graphData.layout"
+    [config]="data.config"
+    [useResizeHandler]="true"
+></plotly-plot>
+<button
+    mat-mini-fab
+    color="primary"
+    class="full-screen-button"
+    matTooltip="Esci da schermo intero"
+    (click)="closeFullScreen()"
+>
+    <mat-icon>fullscreen_exit</mat-icon>
+</button>

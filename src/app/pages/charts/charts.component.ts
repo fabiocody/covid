@@ -9,6 +9,8 @@ import {
     LoadableScripts,
 } from '../../services/dynamic-script-loader/dynamic-script-loader.service';
 import {DateService} from '../../services/date/date.service';
+import {MatDialog} from '@angular/material/dialog';
+import {FullScreenChartComponent, FullScreenChartData} from './full-screen-chart/full-screen-chart.component';
 
 class GraphData {
     data: Plotly.Data;
@@ -35,9 +37,13 @@ export class ChartsComponent implements OnInit, OnDestroy {
     public config = {locale: 'it-IT'};
     private subs = new SubSink();
 
-    constructor(private dataService: DataService, private scriptLoader: DynamicScriptLoaderService) {}
+    constructor(
+        private dataService: DataService,
+        private scriptLoader: DynamicScriptLoaderService,
+        private dialog: MatDialog,
+    ) {}
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.scriptLoader.load(LoadableScripts.plotlyItLocale);
         this.subs.sink = this.dataService.data.subscribe(data => {
             this.data = data;
@@ -47,16 +53,20 @@ export class ChartsComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.subs.unsubscribe();
         this.scriptLoader.unload(LoadableScripts.plotlyItLocale);
     }
 
-    async createDeltaData(): Promise<void> {
+    public get graphs(): string[] {
+        return Object.keys(this.graphData).filter(k => this.graphData[k]);
+    }
+
+    private async createDeltaData(): Promise<void> {
         this.deltaData = DeltaService.createDelta(this.data);
     }
 
-    async filterDataset(): Promise<void> {
+    public async filterDataset(): Promise<void> {
         this.filteredData = this.data
             .filter(d => DateService.withTimeAtStartOfDay(d.date) >= DateService.withTimeAtStartOfDay(this.fromDate))
             .filter(d => DateService.withTimeAtStartOfDay(d.date) <= DateService.withTimeAtStartOfDay(this.toDate));
@@ -66,7 +76,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
         this.plot().then();
     }
 
-    async plot(): Promise<void> {
+    private async plot(): Promise<void> {
         const graphData = new GraphData();
         if (this.filteredData.length > 0) {
             const x = this.filteredData.map(d => d.date);
@@ -198,5 +208,21 @@ export class ChartsComponent implements OnInit, OnDestroy {
             };
         }
         this.graphData = graphData;
+    }
+
+    public openFullScreen(graphKey: string): void {
+        const data: FullScreenChartData = {
+            graphData: this.graphData[graphKey],
+            config: this.config,
+        };
+        this.dialog.open(FullScreenChartComponent, {
+            data: data,
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            height: '100%',
+            width: '100%',
+            autoFocus: false,
+            restoreFocus: false,
+        });
     }
 }

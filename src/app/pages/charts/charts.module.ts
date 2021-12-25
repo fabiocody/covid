@@ -8,12 +8,17 @@ import {DateFilterModule} from '../../elements/date-filter/date-filter.module';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {DynamicScriptLoaderModule} from '../../services/dynamic-script-loader/dynamic-script-loader.module';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import {FullScreenChartComponent} from './full-screen-chart/full-screen-chart.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 PlotlyViaCDNModule.setPlotlyVersion('2.0.0');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
 
 @NgModule({
-    declarations: [ChartsComponent],
+    declarations: [ChartsComponent, FullScreenChartComponent],
     imports: [
         ChartsRoutingModule,
         CommonModule,
@@ -23,6 +28,10 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
         DateFilterModule,
         MatCardModule,
         MatExpansionModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatTooltipModule,
     ],
 })
 export class ChartsModule {}
