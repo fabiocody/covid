@@ -18,7 +18,7 @@
             "prefix": "app",
             "architect": {
                 "build": {
-                    "builder": "@angular-builders/custom-webpack:browser",
+                    "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "outputPath": "dist/covid",
                         "index": "src/index.html",
@@ -38,11 +38,7 @@
                         "optimization": false,
                         "namedChunks": true,
                         "serviceWorker": true,
-                        "ngswConfigPath": "ngsw-config.json",
-                        "customWebpackConfig": {
-                            "path": "./webpack.config.js",
-                            "replaceDuplicatePlugins": true
-                        }
+                        "ngswConfigPath": "ngsw-config.json"
                     },
                     "configurations": {
                         "production": {
