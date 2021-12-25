@@ -12,47 +12,50 @@
 </div>
 
 <mat-accordion multi>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel *ngIf="graphData.data" [expanded]="true">
         <plotly-plot
-            *ngIf="graphData.data"
             [data]="graphData.data.data"
             [layout]="graphData.data.layout"
             [config]="config"
             [useResizeHandler]="true"
         ></plotly-plot>
     </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel *ngIf="graphData.delta" [expanded]="true">
         <plotly-plot
-            *ngIf="graphData.delta"
             [data]="graphData.delta.data"
             [layout]="graphData.delta.layout"
             [config]="config"
             [useResizeHandler]="true"
         ></plotly-plot>
     </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel *ngIf="graphData.hospitalized" [expanded]="true">
         <plotly-plot
-            *ngIf="graphData.hospitalized"
             [data]="graphData.hospitalized.data"
             [layout]="graphData.hospitalized.layout"
             [config]="config"
             [useResizeHandler]="true"
         ></plotly-plot>
     </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel *ngIf="graphData.deltaHospitalized" [expanded]="true">
         <plotly-plot
-            *ngIf="graphData.deltaHospitalized"
             [data]="graphData.deltaHospitalized.data"
             [layout]="graphData.deltaHospitalized.layout"
             [config]="config"
             [useResizeHandler]="true"
         ></plotly-plot>
     </mat-expansion-panel>
-    <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel *ngIf="graphData.positivePercentage" [expanded]="true">
         <plotly-plot
-            *ngIf="graphData.positivePercentage"
             [data]="graphData.positivePercentage.data"
             [layout]="graphData.positivePercentage.layout"
+            [config]="config"
+            [useResizeHandler]="true"
+        ></plotly-plot>
+    </mat-expansion-panel>
+    <mat-expansion-panel *ngIf="graphData.tests" [expanded]="true">
+        <plotly-plot
+            [data]="graphData.tests.data"
+            [layout]="graphData.tests.layout"
             [config]="config"
             [useResizeHandler]="true"
         ></plotly-plot>

@@ -15,6 +15,7 @@ class GraphData {
     delta: Plotly.Data;
     hospitalized: Plotly.Data;
     deltaHospitalized: Plotly.Data;
+    tests: Plotly.Data;
     positivePercentage: Plotly.Data;
 }
 
@@ -171,6 +172,17 @@ export class ChartsComponent implements OnInit, OnDestroy {
                     },
                 ],
                 layout: {title: 'Percentuale di positivi', yaxis: {title: '%'}},
+            };
+            graphData.tests = {
+                data: [
+                    {
+                        x,
+                        y: this.filteredDeltaData.map(d => d.tests),
+                        name: 'Tamponi',
+                        line: {shape: 'spline'},
+                    },
+                ],
+                layout: {title: 'Tamponi'},
             };
         }
         this.graphData = graphData;
