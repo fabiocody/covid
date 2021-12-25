@@ -10,6 +10,8 @@ interface MultiDataModel {
     hospitalized: number[];
     icu: number[];
     tests: number[];
+    molecularTests: number[];
+    antigenTests: number[];
     positiveTestsRatio: number[];
 }
 
@@ -37,6 +39,8 @@ export class DeltaService {
             hospitalized: DeltaService.ediff1d(data.map(d => d.hospitalized)),
             icu: DeltaService.ediff1d(data.map(d => d.icu)),
             tests: DeltaService.ediff1d(data.map(d => d.tests)),
+            molecularTests: DeltaService.ediff1d(data.map(d => d.molecularTests)),
+            antigenTests: DeltaService.ediff1d(data.map(d => d.antigenTests)),
             positiveTestsRatio: DeltaService.ediff1d(data.map(d => d.positiveTestsRatio)),
         };
     }

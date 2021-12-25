@@ -8,6 +8,8 @@ export class DataModel {
     hospitalized!: number;
     icu!: number;
     tests!: number;
+    molecularTests!: number;
+    antigenTests!: number;
     positiveTestsRatio!: number;
 
     public static fromObject(object: any): DataModel | null {
@@ -22,6 +24,8 @@ export class DataModel {
             data.hospitalized = parseFloat(object.totale_ospedalizzati);
             data.icu = parseFloat(object.terapia_intensiva);
             data.tests = parseFloat(object.tamponi);
+            data.molecularTests = parseFloat(object.tamponi_test_molecolare);
+            data.antigenTests = parseFloat(object.tamponi_test_antigenico_rapido);
             return data;
         } else {
             return null;
@@ -39,6 +43,8 @@ export class DataModel {
         data.hospitalized = Math.round((origin.hospitalized / population) * 100000);
         data.icu = Math.round((origin.icu / population) * 100000);
         data.tests = Math.round((origin.tests / population) * 100000);
+        data.molecularTests = Math.round((origin.molecularTests / population) * 100000);
+        data.antigenTests = Math.round((origin.antigenTests / population) * 100000);
         return data;
     }
 

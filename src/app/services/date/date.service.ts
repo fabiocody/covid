@@ -16,6 +16,6 @@ export class DateService {
     }
 
     public static max(dates: Date[]): Date {
-        return dates.reduce((a, b) => (a > b ? a : b));
+        return dates.length > 0 ? dates.reduce((a, b) => (a > b ? a : b)) : new Date();
     }
 }

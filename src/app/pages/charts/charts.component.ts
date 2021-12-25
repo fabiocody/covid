@@ -181,6 +181,18 @@ export class ChartsComponent implements OnInit, OnDestroy {
                         name: 'Tamponi',
                         line: {shape: 'spline'},
                     },
+                    {
+                        x,
+                        y: this.filteredDeltaData.map(d => d.molecularTests),
+                        name: 'Tamponi molecolari',
+                        line: {shape: 'spline'},
+                    },
+                    {
+                        x,
+                        y: this.filteredDeltaData.map(d => d.antigenTests),
+                        name: 'Tamponi antigenici',
+                        line: {shape: 'spline'},
+                    },
                 ],
                 layout: {title: 'Tamponi'},
             };
