@@ -3,9 +3,9 @@ import {DataModel} from '../../model/DataModel';
 import {DataService} from '../../services/data/data.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import * as moment from 'moment';
 import {SubSink} from 'subsink';
 import {DeltaService} from '../../services/delta/delta.service';
+import {DateService} from '../../services/date/date.service';
 
 @Component({
     selector: 'app-data-table',
@@ -17,8 +17,8 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
     private data: DataModel[] = [];
     private dataSource = new MatTableDataSource<DataModel>();
     public filteredDataSource = new MatTableDataSource<DataModel>();
-    public toDate = moment().toDate();
-    public fromDate = moment().subtract(1, 'month').toDate();
+    public toDate = new Date();
+    public fromDate = DateService.addMonths(new Date(), -1);
     private delta = false;
     private populationRatio = false;
     private subs = new SubSink();
@@ -30,8 +30,8 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit(): void {
         this.subs.sink = this.dataService.data.subscribe(data => {
             this.data = data;
-            this.toDate = data.length > 0 ? data[0].date : moment().toDate();
-            this.fromDate = moment(this.toDate).subtract(1, 'month').toDate();
+            this.toDate = data.length > 0 ? data[0].date : new Date();
+            this.fromDate = DateService.addMonths(this.toDate, -1);
             this.populateTable();
         });
     }
@@ -59,8 +59,8 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public filterDataset(): void {
         this.filteredDataSource.data = this.dataSource.data
-            .filter(d => moment(d.date).isSameOrAfter(this.fromDate, 'day'))
-            .filter(d => moment(d.date).isSameOrBefore(this.toDate, 'day'));
+            .filter(d => DateService.withTimeAtStartOfDay(d.date) >= DateService.withTimeAtStartOfDay(this.fromDate))
+            .filter(d => DateService.withTimeAtStartOfDay(d.date) <= DateService.withTimeAtStartOfDay(this.toDate));
         this.filteredDataSource.paginator = this.paginator;
     }
 

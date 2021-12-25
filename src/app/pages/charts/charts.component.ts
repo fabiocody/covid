@@ -2,13 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataModel} from '../../model/DataModel';
 import {DataService} from '../../services/data/data.service';
 import {Plotly} from 'angular-plotly.js/lib/plotly.interface';
-import * as moment from 'moment';
 import {SubSink} from 'subsink';
 import {DeltaService} from '../../services/delta/delta.service';
 import {
     DynamicScriptLoaderService,
     LoadableScripts,
 } from '../../services/dynamic-script-loader/dynamic-script-loader.service';
+import {DateService} from '../../services/date/date.service';
 
 class GraphData {
     data: Plotly.Data;
@@ -28,8 +28,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
     private deltaData: DataModel[] = [];
     private filteredData: DataModel[] = [];
     private filteredDeltaData: DataModel[] = [];
-    public toDate = moment().toDate();
-    public fromDate = moment(this.toDate).subtract(14, 'days').toDate();
+    public toDate = new Date();
+    public fromDate = DateService.addDays(this.toDate, -14);
     public graphData: GraphData = new GraphData();
     public config = {locale: 'it-IT'};
     private subs = new SubSink();
@@ -40,9 +40,9 @@ export class ChartsComponent implements OnInit, OnDestroy {
         this.scriptLoader.load(LoadableScripts.plotlyItLocale);
         this.subs.sink = this.dataService.data.subscribe(data => {
             this.data = data;
-            this.toDate = this.data.length > 0 ? this.data[0].date : moment().toDate();
-            this.fromDate = moment(this.toDate).subtract(14, 'days').toDate();
-            this.createDeltaData().then(_ => this.filterDataset());
+            this.toDate = this.data.length > 0 ? this.data[0].date : new Date();
+            this.fromDate = DateService.addDays(this.toDate, -14);
+            this.createDeltaData().then(() => this.filterDataset());
         });
     }
 
@@ -57,11 +57,11 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
     async filterDataset(): Promise<void> {
         this.filteredData = this.data
-            .filter(d => moment(d.date).isSameOrAfter(this.fromDate, 'day'))
-            .filter(d => moment(d.date).isSameOrBefore(this.toDate, 'day'));
+            .filter(d => DateService.withTimeAtStartOfDay(d.date) >= DateService.withTimeAtStartOfDay(this.fromDate))
+            .filter(d => DateService.withTimeAtStartOfDay(d.date) <= DateService.withTimeAtStartOfDay(this.toDate));
         this.filteredDeltaData = this.deltaData
-            .filter(d => moment(d.date).isSameOrAfter(this.fromDate, 'day'))
-            .filter(d => moment(d.date).isSameOrBefore(this.toDate, 'day'));
+            .filter(d => DateService.withTimeAtStartOfDay(d.date) >= DateService.withTimeAtStartOfDay(this.fromDate))
+            .filter(d => DateService.withTimeAtStartOfDay(d.date) <= DateService.withTimeAtStartOfDay(this.toDate));
         this.plot().then();
     }
 

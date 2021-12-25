@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {DynamicScriptLoaderModule} from './dynamic-script-loader.module';
 
 interface Script {
     name: string;
@@ -13,11 +14,9 @@ export class LoadableScripts {
 }
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: DynamicScriptLoaderModule,
 })
 export class DynamicScriptLoaderService {
-    constructor() {}
-
     public load(script: Script): void {
         let scriptTag = document.getElementsByTagName('script').namedItem(script.name);
         if (scriptTag) {
