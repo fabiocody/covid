@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataService} from '../../services/data/data.service';
 import {DataModel} from '../../model/DataModel';
 import {SubSink} from 'subsink';
+import {UpdateService} from '../../services/update/update.service';
+import {DateService} from '../../services/date/date.service';
 
 @Component({
     selector: 'app-today',
@@ -17,11 +19,14 @@ export class TodayComponent implements OnInit, OnDestroy {
     public fourWeeksDelta = new DataModel();
     private subs = new SubSink();
 
-    constructor(private dataService: DataService) {}
+    constructor(private dataService: DataService, private updateService: UpdateService) {}
 
     ngOnInit(): void {
         this.subs.sink = this.dataService.data.subscribe(data => {
             this.todayData = data[0];
+            if (this.todayData && DateService.addDays(new Date(), -1) > this.todayData.date) {
+                this.updateService.openSnackBar();
+            }
             const yesterdayData = data[1];
             for (const key in this.todayData) {
                 if (this.todayData.hasOwnProperty(key)) {

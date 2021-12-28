@@ -33,7 +33,7 @@ export class UpdateService implements OnDestroy {
             });
     }
 
-    private openSnackBar(): void {
+    public openSnackBar(): void {
         this.subs.sink = this.snackbar
             .open('Aggiornamento disponibile', 'Aggiorna', {verticalPosition: 'top'})
             .afterDismissed()
@@ -45,7 +45,12 @@ export class UpdateService implements OnDestroy {
     }
 
     private async activate(): Promise<void> {
-        await this.update.activateUpdate();
-        document.location.reload();
+        try {
+            await this.update.activateUpdate();
+        } catch {
+            console.error('Error while activating update');
+        } finally {
+            document.location.reload();
+        }
     }
 }
