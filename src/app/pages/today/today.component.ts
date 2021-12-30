@@ -24,7 +24,7 @@ export class TodayComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subs.sink = this.dataService.data.subscribe(data => {
             this.todayData = data[0];
-            if (this.todayData && DateService.addDays(new Date(), -1) > this.todayData.date) {
+            if (this.todayData && DateService.addDays(new Date(), -2) > this.todayData.date) {
                 this.updateService.openSnackBar();
             }
             const yesterdayData = data[1];

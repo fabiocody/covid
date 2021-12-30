@@ -113,6 +113,9 @@
     },
     "defaultProject": "covid",
     "cli": {
-        "analytics": "4f63eaeb-43ef-46af-bcbf-97a682e278b9"
+        "analytics": "4f63eaeb-43ef-46af-bcbf-97a682e278b9",
+        "cache": {
+            "enabled": false
+        }
     }
 }
