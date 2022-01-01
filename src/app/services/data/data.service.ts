@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {DataModel} from '../../model/DataModel';
 import {HttpClient} from '@angular/common/http';
 import {RegionsService} from '../regions/regions.service';
@@ -18,7 +18,7 @@ export class DataService {
     private regionsDataSubject = new BehaviorSubject<DataModel[]>([]);
     public regionsData = this.regionsDataSubject.asObservable();
     private dataSubject = new BehaviorSubject<DataModel[]>([]);
-    public data: Observable<DataModel[]> = this.dataSubject.asObservable();
+    public data = this.dataSubject.asObservable();
 
     public population: {[region: string]: number} = {
         Italia: 59641488,

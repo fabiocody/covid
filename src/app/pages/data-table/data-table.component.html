@@ -1,14 +1,6 @@
 <mat-card-title>Dati</mat-card-title>
 
-<div class="row mt-4 align-items-center">
-    <div class="col-12 col-md-6">
-        <app-date-filter
-            [(fromDate)]="fromDate"
-            (fromDateChange)="filterDataset()"
-            [(toDate)]="toDate"
-            (toDateChange)="filterDataset()"
-        ></app-date-filter>
-    </div>
+<div class="row my-4 align-items-center">
     <div class="col-12 col-md-6">
         <mat-slide-toggle (change)="setDelta($event.checked)">Variazioni</mat-slide-toggle>
         <mat-slide-toggle (change)="setPopulationRatio($event.checked)">Ogni 100.000 abitanti</mat-slide-toggle>
@@ -16,7 +8,7 @@
 </div>
 
 <div class="table-responsive mat-elevation-z3 mt-3 mt-md-0">
-    <table mat-table [dataSource]="filteredDataSource">
+    <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="date" mat-align-tabs="center">
             <th class="font-weight-bold" mat-header-cell *matHeaderCellDef>
                 {{ "Data" | uppercase }}

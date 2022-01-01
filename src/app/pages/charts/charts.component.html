@@ -1,16 +1,5 @@
 <mat-card-title>Grafici</mat-card-title>
 
-<div class="row mt-4">
-    <div class="col-12 col-md-6">
-        <app-date-filter
-            [(fromDate)]="fromDate"
-            (fromDateChange)="filterDataset()"
-            [(toDate)]="toDate"
-            (toDateChange)="filterDataset()"
-        ></app-date-filter>
-    </div>
-</div>
-
 <mat-accordion multi>
     <ng-container *ngFor="let graph of graphs">
         <mat-expansion-panel [expanded]="true">

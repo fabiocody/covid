@@ -5,7 +5,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {SubSink} from 'subsink';
 import {DeltaService} from '../../services/delta/delta.service';
-import {DateService} from '../../services/date/date.service';
 
 @Component({
     selector: 'app-data-table',
@@ -15,10 +14,7 @@ import {DateService} from '../../services/date/date.service';
 export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
     public COLUMNS = ['date', 'total', 'active', 'recovered', 'deaths', 'hospitalized', 'icu', 'tests', 'ptPercent'];
     private data: DataModel[] = [];
-    private dataSource = new MatTableDataSource<DataModel>();
-    public filteredDataSource = new MatTableDataSource<DataModel>();
-    public toDate = new Date();
-    public fromDate = DateService.addMonths(new Date(), -1);
+    public dataSource = new MatTableDataSource<DataModel>();
     private delta = false;
     private populationRatio = false;
     private subs = new SubSink();
@@ -30,8 +26,6 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit(): void {
         this.subs.sink = this.dataService.data.subscribe(data => {
             this.data = data;
-            this.toDate = data.length > 0 ? data[0].date : new Date();
-            this.fromDate = DateService.addMonths(this.toDate, -1);
             this.populateTable();
         });
     }
@@ -41,7 +35,7 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.filteredDataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginator;
     }
 
     public populateTable(): void {
@@ -54,14 +48,6 @@ export class DataTableComponent implements OnInit, OnDestroy, AfterViewInit {
                 DataModel.cloneWithPopulation(d, this.dataService.population[d.region]),
             );
         }
-        this.filterDataset();
-    }
-
-    public filterDataset(): void {
-        this.filteredDataSource.data = this.dataSource.data
-            .filter(d => DateService.withTimeAtStartOfDay(d.date) >= DateService.withTimeAtStartOfDay(this.fromDate))
-            .filter(d => DateService.withTimeAtStartOfDay(d.date) <= DateService.withTimeAtStartOfDay(this.toDate));
-        this.filteredDataSource.paginator = this.paginator;
     }
 
     public setDelta(delta: boolean): void {

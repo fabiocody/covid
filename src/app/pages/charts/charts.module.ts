@@ -14,7 +14,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {FullScreenChartComponent} from './full-screen-chart/full-screen-chart.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
-PlotlyViaCDNModule.setPlotlyVersion('2.0.0');
+PlotlyViaCDNModule.setPlotlyVersion('2.8.3');
 PlotlyViaCDNModule.setPlotlyBundle('basic');
 
 @NgModule({

@@ -29,10 +29,8 @@ class GraphData {
 export class ChartsComponent implements OnInit, OnDestroy {
     private data: DataModel[] = [];
     private deltaData: DataModel[] = [];
-    private filteredData: DataModel[] = [];
-    private filteredDeltaData: DataModel[] = [];
-    public toDate = new Date();
-    public fromDate = DateService.addDays(this.toDate, -14);
+    public readonly endDate = new Date();
+    public readonly startDate = DateService.addDays(this.endDate, -14);
     public graphData: GraphData = new GraphData();
     public config = {locale: 'it-IT'};
     private subs = new SubSink();
@@ -47,9 +45,8 @@ export class ChartsComponent implements OnInit, OnDestroy {
         this.scriptLoader.load(LoadableScripts.plotlyItLocale);
         this.subs.sink = this.dataService.data.subscribe(data => {
             this.data = data;
-            this.toDate = this.data.length > 0 ? this.data[0].date : new Date();
-            this.fromDate = DateService.addDays(this.toDate, -14);
-            this.createDeltaData().then(() => this.filterDataset());
+            this.deltaData = DeltaService.createDelta(data);
+            this.plot();
         });
     }
 
@@ -62,149 +59,139 @@ export class ChartsComponent implements OnInit, OnDestroy {
         return Object.keys(this.graphData).filter(k => this.graphData[k]);
     }
 
-    private async createDeltaData(): Promise<void> {
-        this.deltaData = DeltaService.createDelta(this.data);
-    }
-
-    public async filterDataset(): Promise<void> {
-        this.filteredData = this.data
-            .filter(d => DateService.withTimeAtStartOfDay(d.date) >= DateService.withTimeAtStartOfDay(this.fromDate))
-            .filter(d => DateService.withTimeAtStartOfDay(d.date) <= DateService.withTimeAtStartOfDay(this.toDate));
-        this.filteredDeltaData = this.deltaData
-            .filter(d => DateService.withTimeAtStartOfDay(d.date) >= DateService.withTimeAtStartOfDay(this.fromDate))
-            .filter(d => DateService.withTimeAtStartOfDay(d.date) <= DateService.withTimeAtStartOfDay(this.toDate));
-        this.plot().then();
-    }
-
-    private async plot(): Promise<void> {
+    private plot(): void {
         const graphData = new GraphData();
-        if (this.filteredData.length > 0) {
-            const x = this.filteredData.map(d => d.date);
+        if (this.data.length > 0) {
+            const x = this.data.map(d => d.date);
             graphData.data = {
                 data: [
                     {
                         x,
-                        y: this.filteredData.map(d => d.totalCases),
+                        y: this.data.map(d => d.totalCases),
                         name: 'Casi totali',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredData.map(d => d.activeCases),
+                        y: this.data.map(d => d.activeCases),
                         name: 'Casi attivi',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredData.map(d => d.recovered),
+                        y: this.data.map(d => d.recovered),
                         name: 'Guariti',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredData.map(d => d.deaths),
+                        y: this.data.map(d => d.deaths),
                         name: 'Morti',
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Dati'},
+                layout: {title: 'Dati', xaxis: {range: [this.startDate, this.endDate]}},
             };
             graphData.delta = {
                 data: [
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.totalCases),
+                        y: this.deltaData.map(d => d.totalCases),
                         name: 'Casi totali',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.activeCases),
+                        y: this.deltaData.map(d => d.activeCases),
                         name: 'Casi attivi',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.recovered),
+                        y: this.deltaData.map(d => d.recovered),
                         name: 'Guariti',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.deaths),
+                        y: this.deltaData.map(d => d.deaths),
                         name: 'Morti',
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Variazioni'},
+                layout: {title: 'Variazioni', xaxis: {range: [this.startDate, this.endDate]}},
             };
             graphData.hospitalized = {
                 data: [
                     {
                         x,
-                        y: this.filteredData.map(d => d.hospitalized),
+                        y: this.data.map(d => d.hospitalized),
                         name: 'Ricoverati',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredData.map(d => d.icu),
+                        y: this.data.map(d => d.icu),
                         name: 'TI',
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Ospedalizzati'},
+                layout: {title: 'Ospedalizzati', xaxis: {range: [this.startDate, this.endDate]}},
             };
             graphData.deltaHospitalized = {
                 data: [
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.hospitalized),
+                        y: this.deltaData.map(d => d.hospitalized),
                         name: 'Ricoverati',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.icu),
+                        y: this.deltaData.map(d => d.icu),
                         name: 'TI',
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Variazioni ospedalizzati'},
+                layout: {title: 'Variazioni ospedalizzati', xaxis: {range: [this.startDate, this.endDate]}},
             };
             graphData.positivePercentage = {
                 data: [
                     {
                         x,
-                        y: this.filteredData.map(d => d.positiveTestsRatio),
+                        y: this.data.map(d => d.positiveTestsRatio),
                         showLegend: false,
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Percentuale di positivi', yaxis: {title: '%'}},
+                layout: {
+                    title: 'Percentuale di positivi',
+                    xaxis: {range: [this.startDate, this.endDate]},
+                    yaxis: {title: '%'},
+                },
             };
             graphData.tests = {
                 data: [
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.tests),
+                        y: this.deltaData.map(d => d.tests),
                         name: 'Tamponi',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.molecularTests),
+                        y: this.deltaData.map(d => d.molecularTests),
                         name: 'Tamponi molecolari',
                         line: {shape: 'spline'},
                     },
                     {
                         x,
-                        y: this.filteredDeltaData.map(d => d.antigenTests),
+                        y: this.deltaData.map(d => d.antigenTests),
                         name: 'Tamponi antigenici',
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Tamponi'},
+                layout: {title: 'Tamponi', xaxis: {range: [this.startDate, this.endDate]}},
             };
         }
         this.graphData = graphData;
