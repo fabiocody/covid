@@ -1,11 +1,7 @@
 import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Plotly} from 'angular-plotly.js/lib/plotly.interface';
-
-export interface FullScreenChartData {
-    graphData: Plotly.Data;
-    config: any;
-}
+import {ChartHelperService} from '../../../services/chart-helper/chart-helper.service';
+import {PlotlyData} from '../../../services/chart-helper/plotly-data';
 
 @Component({
     selector: 'app-full-screen-chart',
@@ -15,11 +11,16 @@ export interface FullScreenChartData {
 })
 export class FullScreenChartComponent {
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: FullScreenChartData,
+        @Inject(MAT_DIALOG_DATA) public data: PlotlyData,
         private dialogRef: MatDialogRef<FullScreenChartComponent>,
+        private chartHelperService: ChartHelperService,
     ) {}
 
     public closeFullScreen(): void {
         this.dialogRef.close();
+    }
+
+    public get config(): any {
+        return this.chartHelperService.CONFIG;
     }
 }

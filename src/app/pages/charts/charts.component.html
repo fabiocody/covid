@@ -1,23 +1,25 @@
 <mat-card-title>Grafici</mat-card-title>
 
-<mat-accordion multi>
-    <ng-container *ngFor="let graph of graphs">
-        <mat-expansion-panel [expanded]="true">
-            <plotly-plot
-                [data]="graphData[graph].data"
-                [layout]="graphData[graph].layout"
-                [config]="config"
-                [useResizeHandler]="true"
-            ></plotly-plot>
-            <button
-                mat-mini-fab
-                color="primary"
-                class="full-screen-button"
-                matTooltip="Schermo intero"
-                (click)="openFullScreen(graph)"
-            >
-                <mat-icon>fullscreen</mat-icon>
-            </button>
-        </mat-expansion-panel>
-    </ng-container>
-</mat-accordion>
+<div class="mt-4">
+    <mat-accordion multi>
+        <ng-container *ngFor="let graph of graphs">
+            <mat-expansion-panel [expanded]="true">
+                <plotly-plot
+                    [data]="graphData[graph].data"
+                    [layout]="graphData[graph].layout"
+                    [config]="config"
+                    [useResizeHandler]="true"
+                ></plotly-plot>
+                <button
+                    mat-mini-fab
+                    color="primary"
+                    class="full-screen-button"
+                    matTooltip="Schermo intero"
+                    (click)="openFullScreen(graph)"
+                >
+                    <mat-icon>fullscreen</mat-icon>
+                </button>
+            </mat-expansion-panel>
+        </ng-container>
+    </mat-accordion>
+</div>

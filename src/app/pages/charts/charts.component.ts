@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataModel} from '../../model/DataModel';
 import {DataService} from '../../services/data/data.service';
-import {Plotly} from 'angular-plotly.js/lib/plotly.interface';
 import {SubSink} from 'subsink';
 import {DeltaService} from '../../services/delta/delta.service';
 import {
@@ -10,15 +9,17 @@ import {
 } from '../../services/dynamic-script-loader/dynamic-script-loader.service';
 import {DateService} from '../../services/date/date.service';
 import {MatDialog} from '@angular/material/dialog';
-import {FullScreenChartComponent, FullScreenChartData} from './full-screen-chart/full-screen-chart.component';
+import {FullScreenChartComponent} from './full-screen-chart/full-screen-chart.component';
+import {ChartHelperService} from '../../services/chart-helper/chart-helper.service';
+import {PlotlyData} from '../../services/chart-helper/plotly-data';
 
 class GraphData {
-    data: Plotly.Data;
-    delta: Plotly.Data;
-    hospitalized: Plotly.Data;
-    deltaHospitalized: Plotly.Data;
-    tests: Plotly.Data;
-    positivePercentage: Plotly.Data;
+    public data!: PlotlyData;
+    public delta!: PlotlyData;
+    public hospitalized!: PlotlyData;
+    public deltaHospitalized!: PlotlyData;
+    public tests!: PlotlyData;
+    public positivePercentage!: PlotlyData;
 }
 
 @Component({
@@ -29,17 +30,21 @@ class GraphData {
 export class ChartsComponent implements OnInit, OnDestroy {
     private data: DataModel[] = [];
     private deltaData: DataModel[] = [];
-    public readonly endDate = new Date();
-    public readonly startDate = DateService.addDays(this.endDate, -14);
+    private readonly dateRange: Date[];
+    private readonly sampleCount = 14;
     public graphData: GraphData = new GraphData();
-    public config = {locale: 'it-IT'};
     private subs = new SubSink();
 
     constructor(
         private dataService: DataService,
         private scriptLoader: DynamicScriptLoaderService,
         private dialog: MatDialog,
-    ) {}
+        private chartHelperService: ChartHelperService,
+    ) {
+        const endDate = DateService.withTimeAtStartOfDay(new Date());
+        const startDate = DateService.addDays(endDate, -this.sampleCount);
+        this.dateRange = [startDate, endDate];
+    }
 
     public ngOnInit(): void {
         this.scriptLoader.load(LoadableScripts.plotlyItLocale);
@@ -57,6 +62,10 @@ export class ChartsComponent implements OnInit, OnDestroy {
 
     public get graphs(): string[] {
         return Object.keys(this.graphData).filter(k => this.graphData[k]);
+    }
+
+    public get config(): any {
+        return this.chartHelperService.CONFIG;
     }
 
     private plot(): void {
@@ -90,7 +99,17 @@ export class ChartsComponent implements OnInit, OnDestroy {
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Dati', xaxis: {range: [this.startDate, this.endDate]}},
+                layout: {
+                    title: 'Dati',
+                    xaxis: {range: this.dateRange},
+                    yaxis: {
+                        range: this.chartHelperService.getYRange(
+                            this.data,
+                            ['totalCases', 'activeCases', 'recovered', 'deaths'],
+                            this.sampleCount,
+                        ),
+                    },
+                },
             };
             graphData.delta = {
                 data: [
@@ -119,7 +138,17 @@ export class ChartsComponent implements OnInit, OnDestroy {
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Variazioni', xaxis: {range: [this.startDate, this.endDate]}},
+                layout: {
+                    title: 'Variazioni',
+                    xaxis: {range: this.dateRange},
+                    yaxis: {
+                        range: this.chartHelperService.getYRange(
+                            this.deltaData,
+                            ['totalCases', 'activeCases', 'recovered', 'deaths'],
+                            this.sampleCount,
+                        ),
+                    },
+                },
             };
             graphData.hospitalized = {
                 data: [
@@ -136,7 +165,13 @@ export class ChartsComponent implements OnInit, OnDestroy {
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Ospedalizzati', xaxis: {range: [this.startDate, this.endDate]}},
+                layout: {
+                    title: 'Ospedalizzati',
+                    xaxis: {range: this.dateRange},
+                    yaxis: {
+                        range: this.chartHelperService.getYRange(this.data, ['hospitalized', 'icu'], this.sampleCount),
+                    },
+                },
             };
             graphData.deltaHospitalized = {
                 data: [
@@ -153,7 +188,17 @@ export class ChartsComponent implements OnInit, OnDestroy {
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Variazioni ospedalizzati', xaxis: {range: [this.startDate, this.endDate]}},
+                layout: {
+                    title: 'Variazioni ospedalizzati',
+                    xaxis: {range: this.dateRange},
+                    yaxis: {
+                        range: this.chartHelperService.getYRange(
+                            this.deltaData,
+                            ['hospitalized', 'icu'],
+                            this.sampleCount,
+                        ),
+                    },
+                },
             };
             graphData.positivePercentage = {
                 data: [
@@ -166,8 +211,11 @@ export class ChartsComponent implements OnInit, OnDestroy {
                 ],
                 layout: {
                     title: 'Percentuale di positivi',
-                    xaxis: {range: [this.startDate, this.endDate]},
-                    yaxis: {title: '%'},
+                    xaxis: {range: this.dateRange},
+                    yaxis: {
+                        title: '%',
+                        range: this.chartHelperService.getYRange(this.data, ['positiveTestsRatio'], this.sampleCount),
+                    },
                 },
             };
             graphData.tests = {
@@ -191,19 +239,25 @@ export class ChartsComponent implements OnInit, OnDestroy {
                         line: {shape: 'spline'},
                     },
                 ],
-                layout: {title: 'Tamponi', xaxis: {range: [this.startDate, this.endDate]}},
+                layout: {
+                    title: 'Tamponi',
+                    xaxis: {range: this.dateRange},
+                    yaxis: {
+                        range: this.chartHelperService.getYRange(
+                            this.deltaData,
+                            ['tests', 'molecularTests', 'antigenTests'],
+                            this.sampleCount,
+                        ),
+                    },
+                },
             };
         }
         this.graphData = graphData;
     }
 
     public openFullScreen(graphKey: string): void {
-        const data: FullScreenChartData = {
-            graphData: this.graphData[graphKey],
-            config: this.config,
-        };
         this.dialog.open(FullScreenChartComponent, {
-            data: data,
+            data: this.graphData[graphKey],
             maxWidth: '100vw',
             maxHeight: '100vh',
             height: '100%',

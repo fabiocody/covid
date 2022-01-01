@@ -13,9 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FullScreenChartComponent} from './full-screen-chart/full-screen-chart.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
-PlotlyViaCDNModule.setPlotlyVersion('2.8.3');
-PlotlyViaCDNModule.setPlotlyBundle('basic');
+import {ChartHelperModule} from '../../services/chart-helper/chart-helper.module';
 
 @NgModule({
     declarations: [ChartsComponent, FullScreenChartComponent],
@@ -32,6 +30,7 @@ PlotlyViaCDNModule.setPlotlyBundle('basic');
         MatIconModule,
         MatDialogModule,
         MatTooltipModule,
+        ChartHelperModule,
     ],
 })
 export class ChartsModule {}
