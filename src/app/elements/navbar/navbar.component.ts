@@ -37,6 +37,11 @@ export class NavbarComponent {
             routerLink: 'regions-data',
         },
         {
+            label: 'Analisi',
+            icon: 'insights',
+            routerLink: 'analysis',
+        },
+        {
             label: '',
             icon: 'place',
             routerLink: '',

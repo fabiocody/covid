@@ -41,7 +41,7 @@ export class ChartsComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private chartHelperService: ChartHelperService,
     ) {
-        const endDate = DateService.withTimeAtStartOfDay(new Date());
+        const endDate = DateService.addDays(DateService.withTimeAtStartOfDay(new Date()), 1);
         const startDate = DateService.addDays(endDate, -this.sampleCount);
         this.dateRange = [startDate, endDate];
     }

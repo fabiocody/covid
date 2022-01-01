@@ -13,6 +13,7 @@ const routes: Routes = [
         path: 'regions-data',
         loadChildren: () => import('./pages/regions-data/regions-data.module').then(m => m.RegionsDataModule),
     },
+    {path: 'analysis', loadChildren: () => import('./pages/analysis/analysis.module').then(m => m.AnalysisModule)},
 ];
 
 @NgModule({

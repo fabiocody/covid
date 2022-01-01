@@ -12,6 +12,7 @@ export interface PlotlyData {
         title: string;
         xaxis?: PlotlyDataAxis;
         yaxis?: PlotlyDataAxis;
+        dragmode?: string;
     };
 }
 
