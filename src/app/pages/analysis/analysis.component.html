@@ -1,10 +1,23 @@
 <mat-card-title>Analisi</mat-card-title>
 
-<mat-tab-group mat-stretch-tabs class="mt-4" [selectedIndex]="selected" (selectedIndexChange)="changeTab($event)">
-    <mat-tab *ngFor="let metric of METRICS" [label]="metric.translation"></mat-tab>
-</mat-tab-group>
+<div class="row align-items-center mt-4">
+    <mat-form-field class="col-12 col-md-4" appearance="outline">
+        <mat-label>Metrica</mat-label>
+        <mat-select [ngModel]="metric" (ngModelChange)="onMetricChange($event)">
+            <mat-option *ngFor="let metric of metricKeys" [value]="metric">{{ METRICS[metric] }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-12 col-md-4" appearance="outline">
+        <mat-label>Periodo media mobile breve</mat-label>
+        <input matInput type="number" [ngModel]="shortMa" (ngModelChange)="onShortMaChange($event)" />
+    </mat-form-field>
+    <mat-form-field class="col-12 col-md-4" appearance="outline">
+        <mat-label>Periodo media mobile lunga</mat-label>
+        <input matInput type="number" [ngModel]="longMa" (ngModelChange)="onLongMaChange($event)" />
+    </mat-form-field>
+</div>
 
-<div class="plot-container mt-4">
+<div class="plot-container">
     <plotly-plot
         *ngIf="graphData"
         [data]="graphData.data"

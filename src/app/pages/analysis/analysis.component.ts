@@ -13,31 +13,28 @@ import {DateService} from '../../services/date/date.service';
 import {debounceTime} from 'rxjs/operators';
 import {AnalysisService} from './analysis.service';
 
-interface Metric {
-    name: string;
-    translation: string;
-}
-
 @Component({
     selector: 'app-analysis',
     templateUrl: './analysis.component.html',
     styleUrls: ['./analysis.component.scss'],
 })
 export class AnalysisComponent implements OnInit, OnDestroy {
-    public readonly METRICS: Metric[] = [
-        {name: 'totalCases', translation: 'Casi totali'},
-        {name: 'activeCases', translation: 'Casi attivi'},
-        {name: 'recovered', translation: 'Guariti'},
-        {name: 'deaths', translation: 'Morti'},
-        {name: 'hospitalized', translation: 'Ricoverati'},
-        {name: 'icu', translation: 'Terapia intensiva'},
-    ];
-    public selected = 0;
+    public readonly METRICS = {
+        totalCases: 'Casi totali',
+        activeCases: 'Casi attivi',
+        recovered: 'Guariti',
+        deaths: 'Morti',
+        hospitalized: 'Ricoverati',
+        icu: 'Terapia intensiva',
+    };
+    private readonly sampleCount = 30;
+    private readonly dateRange: Date[];
     public graphData!: PlotlyData;
     private data: DataModel[] = [];
     private subs = new SubSink();
-    private readonly sampleCount = 30;
-    private readonly dateRange: Date[];
+    public metric = 'totalCases';
+    public shortMa = 50;
+    public longMa = 200;
 
     constructor(
         private dataService: DataService,
@@ -67,22 +64,21 @@ export class AnalysisComponent implements OnInit, OnDestroy {
         return this.chartHelperService.CONFIG;
     }
 
-    public get selectedMetric(): Metric {
-        return this.METRICS[this.selected];
+    public get metricKeys(): string[] {
+        return Object.keys(this.METRICS);
     }
 
     private plot(): void {
-        const y = this.data.map(d => d[this.selectedMetric.name]);
-        const ma50 = this.analysisService.sma(y.reverse(), 50).reverse();
-        const ma200 = this.analysisService.sma(y.reverse(), 200).reverse();
-        console.log(y);
-        console.log(ma50);
+        const y = this.data.map(d => d[this.metric]);
+        const yReversed = [...y].reverse();
+        const shortMa = this.analysisService.sma(yReversed, this.shortMa).reverse();
+        const longMa = this.analysisService.sma(yReversed, this.longMa).reverse();
         const data = this.data.map((d, i) => {
             return {
                 x: d.date,
-                y: d[this.selectedMetric.name],
-                ma50: ma50[i],
-                ma200: ma200[i],
+                y: d[this.metric],
+                shortMa: shortMa[i],
+                longMa: longMa[i],
             };
         });
         this.graphData = {
@@ -90,20 +86,20 @@ export class AnalysisComponent implements OnInit, OnDestroy {
                 {
                     x: data.map(d => d.x),
                     y: data.map(d => d.y),
-                    name: this.selectedMetric.translation,
+                    name: this.METRICS[this.metric],
                     line: {shape: 'spline'},
                     type: 'bar',
                 },
                 {
                     x: data.map(d => d.x),
-                    y: data.map(d => d.ma50),
-                    name: 'MA(50)',
+                    y: data.map(d => d.shortMa),
+                    name: `MA(${this.shortMa})`,
                     line: {shape: 'spline'},
                 },
                 {
                     x: data.map(d => d.x),
-                    y: data.map(d => d.ma200),
-                    name: 'MA(200)',
+                    y: data.map(d => d.longMa),
+                    name: `MA(${this.longMa})`,
                     line: {shape: 'spline'},
                 },
             ],
@@ -111,16 +107,25 @@ export class AnalysisComponent implements OnInit, OnDestroy {
                 title: '',
                 xaxis: {range: this.dateRange},
                 yaxis: {
-                    range: this.chartHelperService.getYRange(data, ['y', 'ma50', 'ma200'], this.sampleCount),
+                    range: this.chartHelperService.getYRange(data, ['y', 'shortMa', 'longMa'], this.sampleCount),
                 },
                 dragmode: 'pan',
             },
         };
     }
 
-    public changeTab(index: number): void {
-        this.selected = index;
-        console.log(this.selected);
+    public onMetricChange(value: string): void {
+        this.metric = value;
+        this.plot();
+    }
+
+    public onShortMaChange(value: number): void {
+        this.shortMa = value;
+        this.plot();
+    }
+
+    public onLongMaChange(value: number): void {
+        this.longMa = value;
         this.plot();
     }
 }

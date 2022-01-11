@@ -9,6 +9,10 @@ import {PlotlyViaCDNModule} from 'angular-plotly.js';
 import {ChartHelperModule} from '../../services/chart-helper/chart-helper.module';
 import {DynamicScriptLoaderModule} from '../../services/dynamic-script-loader/dynamic-script-loader.module';
 import {AnalysisService} from './analysis.service';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [AnalysisComponent],
@@ -20,6 +24,10 @@ import {AnalysisService} from './analysis.service';
         PlotlyViaCDNModule,
         ChartHelperModule,
         DynamicScriptLoaderModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatInputModule,
+        FormsModule,
     ],
     providers: [AnalysisService],
 })
